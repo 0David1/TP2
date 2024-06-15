@@ -1,6 +1,5 @@
 package aed;
 
-import aed.Trie;
 
 public class Materia {
     //atributos de Materia
@@ -73,7 +72,7 @@ public class Materia {
             }
         }
 
-        public int longitud (){//importante cuando queremos saber la cantidad de alumnos.
+        public int longitud (){//importante cuando necesitamos saber la longitud de la lista(saber la cantidad de alumnos inscriptos)
             return size;
         }
         public void apilar(T alumno){
@@ -84,3 +83,19 @@ public class Materia {
         }
     }
 }
+
+
+/*Resumen de Materia : 
+tiene tres atributos
+   1- lista enlazada de libretas universitarias
+   2- lista enlazada de una clase llamada TrieStringPar que guarda un nombre de la materia, y el trie de donde tengo que borrarlo
+   3- una int[] donde guardo la cantidad de docentes por cargo.
+tengo metodos:
+    1-generador: inicia todos los atributos vacios, o con ceros
+    2-agregarReferencia : suma a la pila de TrieStringPar, dandole el string del nombre de la materia especifico, y el trie donde buscarlo como parametro.
+    3- agregarAlumno : idem anterior pero apila Strings, y necesita a String libreta como parametro.
+    4- cargar Docente : suma uno al indice del cargo del profesor que voy a agregar (0 = Profesor; 1 = JTP ; 2 = AY1; 3 = AY2);(se rompe si salgo de esos indices)
+    5- docentes : devuelve int[] que es atributo, arreglar aliasing debe primero generar una copia y despues devolverla.
+    6-eliminarReferencia : desapila 1 la lista de referencias y devuelve el elemento TrieStringPar "tope".
+    7-eliminarLibreta : desapila el tope de libretas Universitarias inscriptas a esta materia y devuelve el string de esa libreta.
+*/
