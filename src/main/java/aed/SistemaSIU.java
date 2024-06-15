@@ -1,10 +1,6 @@
 package aed;
-import java.util.*;
 
 public class SistemaSIU {
-
-
-
     enum CargoDocente{
         PROF,
         JTP,
