@@ -3,7 +3,8 @@ package aed;
 import java.util.ArrayList;
 
 public class Trie<T> {
-        NodoTrie<T> raiz;
+        private NodoTrie<T> raiz;
+        private int cantidadDePalabras; //numero de palabras en el arbol
 
         public Trie(){//constructor del trie
             raiz = new NodoTrie<T>();
@@ -25,6 +26,7 @@ public class Trie<T> {
                 }
             }
             actual.definicion = valor;
+            cantidadDePalabras++;
         }   
 
         public T definicion (String palabra){
@@ -37,6 +39,32 @@ public class Trie<T> {
                 }
             }
             return actual.definicion;//actual.definicion puede ser null si el nodo no tiene definido nada, chequear en las funciones.
+        }
+
+        public int tamaño(){
+            return cantidadDePalabras;
+        }
+
+        public void borrar(String palabra){
+            raiz = borrar(raiz, palabra, 0);
+        }
+
+        private NodoTrie<T> borrar(NodoTrie<T> x, String palabra, int contador){
+            if(x == null) return null;
+            if(contador == palabra.length()){
+                if(x.definicion != null) cantidadDePalabras--;
+                x.definicion = null;
+            }
+            else {
+                char letraActual = palabra.charAt(contador);
+                x.caracteres[(int)letraActual] = borrar(x.caracteres[(int)letraActual], palabra, contador+1);
+            }
+
+            if(x.definicion != null) return x;
+            for (int c = 0; c < 128; c++){
+                if(x.caracteres[c] != null) return x;
+            }
+            return null;
         }
 
         public String[] listaDeStrings(){
@@ -57,9 +85,11 @@ public class Trie<T> {
             return resultado.toArray(new String[0]);
         }
 
+        @SuppressWarnings("hiding")//evita un warning
         public class NodoTrie<T>{
             NodoTrie<T>[] caracteres;
             T definicion;
+            @SuppressWarnings("unchecked")//evita un warning
             public NodoTrie(){  
                 caracteres = new NodoTrie[128];
                 definicion = null;
