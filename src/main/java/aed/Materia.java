@@ -13,7 +13,7 @@ public class Materia {
         referencias = new listaEnlazada<TrieStringPar>();
     }
     
-    public void agregarReferencia(Trie<String> trieDeLaMateria, String Materia){//agrego referencia a la pila
+    public void agregarReferencia(Trie<Materia> trieDeLaMateria, String Materia){//agrego referencia a la pila
         TrieStringPar valor = new TrieStringPar(trieDeLaMateria, Materia);
         referencias.apilar(valor);
     }
@@ -38,8 +38,8 @@ public class Materia {
 
     public class TrieStringPar{//cree un tipo de dato que relaciona el trie donde esta uno de los nombres de la materia, con el nombre que deberia estar.
         String NombreDeLaMateria;
-        Trie<String> TrieDondeEsta;
-        public TrieStringPar(Trie<String> Materias, String nombreEspecifico){
+        Trie<Materia> TrieDondeEsta;
+        public TrieStringPar(Trie<Materia> Materias, String nombreEspecifico){
             NombreDeLaMateria = nombreEspecifico;
             TrieDondeEsta = Materias;
         }
