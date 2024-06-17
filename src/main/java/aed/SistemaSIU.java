@@ -7,13 +7,16 @@ public class SistemaSIU {
         AY1,
         AY2
     }
-    Trie estudiantes = new Trie();
-    Trie<Trie<Materia>> carreras = new Trie();
 
+    Trie<Integer> estudiantes;
+    Trie<Trie<Materia>> carreras;
     public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias){
+
+        estudiantes = new Trie<Integer>();
+        carreras = new Trie<Trie<Materia>>();
         int i = 0;
-        while(i < libretasUniversitarias.length){
-            estudiantes.definir(libretasUniversitarias[i],0); //agregamos a los estudiantes a su Trie
+        while(i < libretasUniversitarias.length){//esto se ejecuta E veces (E * dentro del ciclo)
+            estudiantes.definir(libretasUniversitarias[i],0); // O (1) ya que las la longitud de las libretas universitarias es acotada.
             i++;
         }
         int j = 0;
@@ -31,8 +34,6 @@ public class SistemaSIU {
             j++;
         }
     }
-    
-    //Queda analizar la complejidad
 
     public void inscribir(String estudiante, String carrera, String materia){
         throw new UnsupportedOperationException("Método no implementado aún");
