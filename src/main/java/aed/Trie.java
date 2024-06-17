@@ -41,6 +41,17 @@ public class Trie<T> {
             return actual.definicion;//actual.definicion puede ser null si el nodo no tiene definido nada, chequear en las funciones.
         }
 
+
+        public int ultimoNodoAborrar(NodoTrie<T> nodo){
+            int largo = nodo.caracteres.length;
+            int cantidad = 0;
+            for (int i = 0 ; i < largo ; i ++){
+                if (nodo.caracteres[i] != null) cantidad ++;
+            }
+            return cantidad;
+        }//devuelve true si el nodo tiene mas de un hijo
+
+
         public int tamaño(){
             return cantidadDePalabras;
         }
@@ -49,23 +60,49 @@ public class Trie<T> {
             raiz = borrar(raiz, palabra, 0);
         }
 
+
         private NodoTrie<T> borrar(NodoTrie<T> x, String palabra, int contador){
+            if (ultimoNodoAborrar(x) >1){
+                NodoTrie<T> ultimoNodo = x;
+            }
             if(x == null) return null;
             if(contador == palabra.length()){
                 if(x.definicion != null) cantidadDePalabras--;
-                x.definicion = null;
+                x.definicion = null;//falta eliminar todos los nodos que lllevan a ese null , es info basura.
+
             }
             else {
-                char letraActual = palabra.charAt(contador);
-                x.caracteres[(int)letraActual] = borrar(x.caracteres[(int)letraActual], palabra, contador+1);
+                int letraActual = palabra.charAt(contador);//lo pase a int en un mismo paso.
+                x.caracteres[letraActual] = borrar(x.caracteres[letraActual], palabra, contador+1);//todo el tiempo elimino la palabra completa, tengo que cortar la letra que ya recorri
             }
 
             if(x.definicion != null) return x;
+            
             for (int c = 0; c < 128; c++){
                 if(x.caracteres[c] != null) return x;
             }
             return null;
         }
+
+        public void borrarInfoBasura(NodoTrie<T> desdeEsteNodo, String palabra){
+            NodoTrie<T> aPartir = raiz;
+            int limite = palabra.length();
+            int i = 0;
+            int caracter;
+            while (i < limite && aPartir!= desdeEsteNodo ){
+                caracter = palabra.charAt(i);
+                aPartir = aPartir.caracteres[caracter];
+                i++;
+            }
+            caracter = palabra.charAt(i+1);
+            aPartir.caracteres[caracter] = null;
+        }
+
+
+
+
+
+
 
         public String[] listaDeStrings(){
             ArrayList<String> resultado = new ArrayList<>();
