@@ -7,10 +7,10 @@ public class SistemaSIU {
         AY1,
         AY2
     }
+    Trie estudiantes = new Trie();
+    Trie<Trie<Materia>> carreras = new Trie();
 
     public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias){
-        Trie estudiantes = new Trie();
-        Trie<Trie<Materia>> carreras = new Trie();
         int i = 0;
         while(i < libretasUniversitarias.length){
             estudiantes.definir(libretasUniversitarias[i],0); //agregamos a los estudiantes a su Trie
