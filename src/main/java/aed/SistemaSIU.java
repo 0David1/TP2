@@ -3,7 +3,7 @@ package aed;
 import aed.Trie.NodoTrie;
 
 public class SistemaSIU {
-    enum CargoDocente{
+    enum CargoDocente {
         PROF,
         JTP,
         AY1,
@@ -13,37 +13,39 @@ public class SistemaSIU {
     Trie<Integer> estudiantes;
     Trie<Trie<Materia>> carreras;
 
-    public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias){
+    public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias) {
         estudiantes = new Trie<Integer>();
         carreras = new Trie<Trie<Materia>>();
-        
-        //Trie Alumnos
+
+        // Trie Alumnos
         int i = 0;
-        while(i < libretasUniversitarias.length){//esto se ejecuta E veces (E * dentro del ciclo)
-            estudiantes.definir(libretasUniversitarias[i],0); // O (1) ya que las la longitud de las libretas universitarias es acotada.
+        while (i < libretasUniversitarias.length) {// esto se ejecuta E veces (E * dentro del ciclo)
+            estudiantes.definir(libretasUniversitarias[i], 0); // O (1) ya que las la longitud de las libretas
+                                                               // universitarias es acotada.
             i++;
-        }//Total = O (E)
-        
-        //Trie carreras --> Trie materias -->Materia
-        int j = 0, k = 0; //j itera sobre materias, y k itera sobre los nombres
-        int cantidadDeMaterias = infoMaterias.length , cantidadDeNombres;//los limites de los iteradores anteriores
-        Materia objetoMateria ;
+        } // Total = O (E)
+
+        // Trie carreras --> Trie materias -->Materia
+        int j = 0, k = 0; // j itera sobre materias, y k itera sobre los nombres
+        int cantidadDeMaterias = infoMaterias.length, cantidadDeNombres;// los limites de los iteradores anteriores
+        Materia objetoMateria;
         ParCarreraMateria[] nombresYCarreras;
-        String nombreMateria , nombreCarrera ;
+        String nombreMateria, nombreCarrera;
         NodoTrie nodoADefinir;
 
-        while (j < cantidadDeMaterias){
-            objetoMateria = new Materia();//tengo que unir todos los nombres a este objeto
+        while (j < cantidadDeMaterias) {
+            objetoMateria = new Materia();// tengo que unir todos los nombres a este objeto
             nombresYCarreras = infoMaterias[j].getParesCarreraMateria();
             cantidadDeNombres = nombresYCarreras.length;
             while (k < cantidadDeNombres) {
                 nombreMateria = nombresYCarreras[k].nombreMateria;
                 nombreCarrera = nombresYCarreras[k].nombreMateria;
                 nodoADefinir = carreras.definirSiVacio(nombreCarrera);
-                if (nodoADefinir.definicion == null){
+                if (nodoADefinir.definicion == null) {
                     nodoADefinir.definicion = new Trie<Materia>();
                 }
-                nodoADefinir.definicion.definirSiVacio(nombreMateria);
+                //nodoADefinir.definicion.definirSiVacio(nombreMateria);
+                //En la ultima letra del trie carrera y la palabra carrera armo un trie de ese ultimo nodo del mismo y uso la funcion definicion("con la ultima letra de la palabra")
                 k++;
             }
             j++;
@@ -58,60 +60,66 @@ public class SistemaSIU {
         // int cantidadDeNombres;//de nombres para una materia
         // NodoTrie materiaTrie;
         // while(j < cantidadDeMaterias){//O(M) , cantidad de materias
-        //     objetoMateria = new Materia();
-        //     cantidadDeNombres = infoMaterias[j].getParesCarreraMateria().length;
-        //     while(k < cantidadDeNombres){//O(N_m) , k iterar por la cantidad de nombres de la materia
-        //         nombre_carrera = infoMaterias[j].getParesCarreraMateria()[k].getCarrera(); 
-        //         nombre_materia = infoMaterias[j].getParesCarreraMateria()[k].getNombreMateria(); //creamos dos variables distintas para guardar los nombres de carrera y materia
-        //         materiaTrie = carreras.definirSiVacio(nombre_carrera);
-        //         if(materiaTrie.definicion == null){ //si no existe la carrera, la creamos con su Trie asociado a materias
-        //             materiaTrie.definicion = new Trie<Materia>();
-        //         }
-        //         k ++;
-        //         materiaTrie.definicion.definir(nombre_materia, objetoMateria);
-        //         carreras.definicion(nombre_carrera).definir(nombre_materia, objetoMateria); //definimos la materia nueva
-        //         objetoMateria.agregarReferencia(carreras.definicion(nombre_carrera), nombre_materia);
-        //     }
-        //     j++;
-        }//O(M*N_m)
-    }
+        // objetoMateria = new Materia();
+        // cantidadDeNombres = infoMaterias[j].getParesCarreraMateria().length;
+        // while(k < cantidadDeNombres){//O(N_m) , k iterar por la cantidad de nombres
+        // de la materia
+        // nombre_carrera = infoMaterias[j].getParesCarreraMateria()[k].getCarrera();
+        // nombre_materia =
+        // infoMaterias[j].getParesCarreraMateria()[k].getNombreMateria(); //creamos dos
+        // variables distintas para guardar los nombres de carrera y materia
+        // materiaTrie = carreras.definirSiVacio(nombre_carrera);
+        // if(materiaTrie.definicion == null){ //si no existe la carrera, la creamos con
+        // su Trie asociado a materias
+        // materiaTrie.definicion = new Trie<Materia>();
+        // }
+        // k ++;
+        // materiaTrie.definicion.definir(nombre_materia, objetoMateria);
+        // carreras.definicion(nombre_carrera).definir(nombre_materia, objetoMateria);
+        // //definimos la materia nueva
+        // objetoMateria.agregarReferencia(carreras.definicion(nombre_carrera),
+        // nombre_materia);
+        // }
+        // j++;
+    }// O(M*N_m)
 
-    public void inscribir(String estudiante, String carrera, String materia){
-        estudiantes.definir(estudiantes.definicion(estudiante)+1);
+    public void inscribir(String estudiante, String carrera, String materia) {
+        estudiantes.definir(estudiante ,estudiantes.definicion(estudiante) + 1);
         carreras.definicion(carrera).definicion(materia).agregarAlumno(estudiante);
 
     }
 
-    public void agregarDocente(CargoDocente cargo, String carrera, String materia){
-        carreras.definicion(carrera).definicion(materia).agregarDocente(CargoDocente.ordinal(cargo));	    
+    public void agregarDocente(CargoDocente cargo, String carrera, String materia) {
+        //carreras.definicion(carrera).definicion(materia).agregarDocente(CargoDocente.ordinal(cargo));
+        //buscar bien la funcion del tipo Enum
     }
 
-    public int[] plantelDocente(String materia, String carrera){
-        return carreras.definicion(carrera).definicion(materia).docentes();	    
+    public int[] plantelDocente(String materia, String carrera) {
+        return carreras.definicion(carrera).definicion(materia).docentes();
     }
 
-    public void cerrarMateria(String materia, String carrera){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
+    public void cerrarMateria(String materia, String carrera) {
+        throw new UnsupportedOperationException("Método no implementado aún");
     }
 
-    public int inscriptos(String materia, String carrera){
-        return carreras.definicion(carrera).definicion(materia).longitud();	    
+    public int inscriptos(String materia, String carrera) {
+        return carreras.definicion(carrera).definicion(materia).libretas.longitud();
     }
 
-    public boolean excedeCupo(String materia, String carrera){
-        return carreras.definicion(carrera).definicion(materia).excedeCupo();	    
+    public boolean excedeCupo(String materia, String carrera) {
+        return carreras.definicion(carrera).definicion(materia).excedeCupo();
     }
 
-    public String[] carreras(){
-        return carreras.listaDeStrings();	    
+    public String[] carreras() {
+        return carreras.listaDeStrings();
     }
 
-    public String[] materias(String carrera){
-        return carreras.definicion(carrera).listaDeStrings();	    
+    public String[] materias(String carrera) {
+        return carreras.definicion(carrera).listaDeStrings();
     }
 
-    public int materiasInscriptas(String estudiante){
-        return estudiantes.definicion(estudiante);	    
-    } //la complejidad de esta funcion claramente es O(1) ya que estamos buscando la definicion de un Trie con tamaño acotado.
+    public int materiasInscriptas(String estudiante) {
+        return estudiantes.definicion(estudiante);
+    } // la complejidad de esta funcion claramente es O(1) ya que estamos buscando la
+      // definicion de un Trie con tamaño acotado.
 }
-
