@@ -77,15 +77,17 @@ public class SistemaSIU {
     }
 
     public void inscribir(String estudiante, String carrera, String materia){
-        throw new UnsupportedOperationException("Método no implementado aún");
+        estudiantes.definir(estudiantes.definicion(estudiante)+1);
+        carreras.definicion(carrera).definicion(materia).agregarAlumno(estudiante);
+
     }
 
     public void agregarDocente(CargoDocente cargo, String carrera, String materia){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
+        carreras.definicion(carrera).definicion(materia).agregarDocente(CargoDocente.ordinal(cargo));	    
     }
 
     public int[] plantelDocente(String materia, String carrera){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
+        return carreras.definicion(carrera).definicion(materia).docentes();	    
     }
 
     public void cerrarMateria(String materia, String carrera){
@@ -93,22 +95,23 @@ public class SistemaSIU {
     }
 
     public int inscriptos(String materia, String carrera){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
+        return carreras.definicion(carrera).definicion(materia).longitud();	    
     }
 
     public boolean excedeCupo(String materia, String carrera){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
+        return carreras.definicion(carrera).definicion(materia).excedeCupo();	    
     }
 
     public String[] carreras(){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
+        return carreras.listaDeStrings();	    
     }
 
     public String[] materias(String carrera){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
+        return carreras.definicion(carrera).listaDeStrings();	    
     }
 
     public int materiasInscriptas(String estudiante){
-        throw new UnsupportedOperationException("Método no implementado aún");	    
-    }
+        return estudiantes.definicion(estudiante);	    
+    } //la complejidad de esta funcion claramente es O(1) ya que estamos buscando la definicion de un Trie con tamaño acotado.
 }
+
