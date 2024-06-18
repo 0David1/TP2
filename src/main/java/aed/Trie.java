@@ -9,9 +9,9 @@ public class Trie<T> {
         public Trie(){//constructor del trie
             raiz = new NodoTrie<T>();
         }
-        // public Trie(NodoTrie nuevaRaiz){//constructor para cuando quiero hacer recursion.
-        //     raiz = nuevaRaiz;
-        // }
+        public Trie(NodoTrie<T> nuevaRaiz){//constructor para cuando quiero hacer recursion.
+            raiz = nuevaRaiz;
+        }
 
         public void definir(String palabra, T valor){//funcion define palabra en el trie
             int largoDePalabra = palabra.length();
@@ -28,6 +28,23 @@ public class Trie<T> {
             actual.definicion = valor;
             cantidadDePalabras++;
         }   
+        public NodoTrie<T> definirSiVacio(String palabra){//si el camino a la definicion no esta hecho lo hace, si no devuelve el ultimo nodo donde deberia estar la definicion.
+            int largoDePalabra = palabra.length();
+            NodoTrie<T> actual = raiz;
+            for (int i = 0; i < largoDePalabra; i++){
+                if (actual.caracteres[(int)palabra.charAt(i)] == null){
+                    actual.caracteres[(int)palabra.charAt(i)] = new NodoTrie<T>();
+                    actual = actual.caracteres[(int)palabra.charAt(i)];
+                }
+                else {
+                    actual = actual.caracteres[(int)palabra.charAt(i)];
+                }
+            }
+            if (actual.definicion == null){
+                cantidadDePalabras ++;
+            }
+            return actual;
+        }
 
         public T definicion (String palabra){
             int largoDePalabra = palabra.length();
@@ -42,16 +59,6 @@ public class Trie<T> {
         }
 
 
-        public int ultimoNodoAborrar(NodoTrie<T> nodo){
-            int largo = nodo.caracteres.length;
-            int cantidad = 0;
-            for (int i = 0 ; i < largo ; i ++){
-                if (nodo.caracteres[i] != null) cantidad ++;
-            }
-            return cantidad;
-        }//devuelve true si el nodo tiene mas de un hijo
-
-
         public int tamaño(){
             return cantidadDePalabras;
         }
@@ -62,18 +69,15 @@ public class Trie<T> {
 
 
         private NodoTrie<T> borrar(NodoTrie<T> x, String palabra, int contador){
-            if (ultimoNodoAborrar(x) >1){
-                NodoTrie<T> ultimoNodo = x;
-            }
             if(x == null) return null;
             if(contador == palabra.length()){
                 if(x.definicion != null) cantidadDePalabras--;
-                x.definicion = null;//falta eliminar todos los nodos que lllevan a ese null , es info basura.
+                x.definicion = null;
 
             }
             else {
-                int letraActual = palabra.charAt(contador);//lo pase a int en un mismo paso.
-                x.caracteres[letraActual] = borrar(x.caracteres[letraActual], palabra, contador+1);//todo el tiempo elimino la palabra completa, tengo que cortar la letra que ya recorri
+                int letraActual = palabra.charAt(contador);
+                x.caracteres[letraActual] = borrar(x.caracteres[letraActual], palabra, contador+1);
             }
 
             if(x.definicion != null) return x;
@@ -84,42 +88,37 @@ public class Trie<T> {
             return null;
         }
 
-        public void borrarInfoBasura(NodoTrie<T> desdeEsteNodo, String palabra){
-            NodoTrie<T> aPartir = raiz;
-            int limite = palabra.length();
-            int i = 0;
-            int caracter;
-            while (i < limite && aPartir!= desdeEsteNodo ){
-                caracter = palabra.charAt(i);
-                aPartir = aPartir.caracteres[caracter];
-                i++;
-            }
-            caracter = palabra.charAt(i+1);
-            aPartir.caracteres[caracter] = null;
-        }
-
-
-
-
-
-
-
         public String[] listaDeStrings(){
             ArrayList<String> resultado = new ArrayList<>();
             NodoTrie<T> actual = raiz;
+            int longitud = actual.caracteres.length;
+            String palabra ;
+            for (int i = 0 ; i < longitud; i++){
+                if (actual.caracteres[i] != null){
+                    palabra = String.valueOf((char) i );
+                    if (actual.definicion != null){
+                        resultado.add(palabra);
+                    }
+                    Trie<T> buscarAca = new Trie<T>(actual.caracteres[i]);
+                    buscarAca.listaDeStrings(resultado,palabra,longitud);
+                }
+            }
 
-            // int largoDeCaracteres = actual.caracteres.length;
-            // for (int i = 0 ; i < largoDeCaracteres ; i ++){
-            //     if (actual.caracteres[i] != null){
-            //         StringBuffer palabra = new StringBuffer();
-            //         palabra.append((char) i);
-            //         if (actual.)
-            //     }
-            //     else{
-
-            //     }
-            // }
             return resultado.toArray(new String[0]);
+        }
+        public ArrayList<String> listaDeStrings(ArrayList<String> agregarAca, String raizPalabra, int longitud){
+            NodoTrie<T> actual = raiz;
+            for (int i = 0; i < longitud; i++){
+                if (actual.caracteres[i]!= null){
+                    raizPalabra = raizPalabra + String.valueOf((char)i);
+                    if (actual.definicion != null){
+                        agregarAca.add(raizPalabra);
+                    }
+                    Trie<T> buscarAca =new Trie<T>(actual.caracteres[i]);
+                    buscarAca.listaDeStrings(agregarAca, raizPalabra, longitud);
+                }
+            }
+            return agregarAca;
         }
 
         @SuppressWarnings("hiding")//evita un warning
