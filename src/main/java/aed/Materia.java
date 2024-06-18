@@ -81,6 +81,16 @@ public class Materia {
             Primero = nuevo;
             size ++;
         }
+        public bool excedeCupo(){
+            int Prof = CargoDocente[0];
+            int JefeTP = CargoDocente[1];
+            int Ay1 = CargoDocente[2];
+            int Ay2 = CargoDocente[3];
+            int cant = libretas.size();
+
+            return(250*Prof >= cant) and (100*JefeTP >= cant) && (20*Ay1 >= cant) && (30*Ay2 >= cant);
+        }
+
     }
 }
 
