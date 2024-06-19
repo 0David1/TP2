@@ -116,9 +116,23 @@ public class SistemaSIU {
     }
 
     public void agregarDocente(CargoDocente cargo, String carrera, String materia) {
-        //carreras.definicion(carrera).definicion(materia).agregarDocente(CargoDocente.ordinal(cargo));
-        //buscar bien la funcion del tipo Enum
+        Materia mate = carreras.definicion(carrera).definicion(materia);
+        switch (cargo) {
+            case PROF:
+                mate.CargarDocente(0);
+                break;
+            case JTP:
+                mate.CargarDocente(1);
+                break;
+            case AY1:
+                mate.CargarDocente(2);
+                break;
+            case AY2:
+                mate.CargarDocente(3);;
+                break;
+        }
     }
+
 
     public int[] plantelDocente(String materia, String carrera) {
         return carreras.definicion(carrera).definicion(materia).docentes();
