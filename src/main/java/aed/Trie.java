@@ -68,24 +68,24 @@ public class Trie<T> {
             raiz = borrar(raiz, palabra, 0);
         }
 
-        private NodoTrie<T> borrar(NodoTrie<T> x, String palabra, int contador){
-            if(x == null) return null;
-            if(contador == palabra.length()){
-                if(x.definicion != null) cantidadDePalabras--;
-                x.definicion = null;
+        private NodoTrie<T> borrar(NodoTrie<T> nodo, String palabra, int contador){
+            if(nodo == null) return null;
 
+            if(contador == palabra.length() ){//caso base ya estoy al final de la palabra
+                if(nodo.definicion != null) cantidadDePalabras--;
+                nodo.definicion = null;
             }
-            else {
+            else {//no estoy en la ultima letra
                 int letraActual = palabra.charAt(contador);
-                x.caracteres[letraActual] = borrar(x.caracteres[letraActual], palabra, contador+1);
+                nodo.caracteres[letraActual] = borrar(nodo.caracteres[letraActual], palabra, contador+1);//manda al nodo siquiente a borrar.
             }
 
-            if(x.definicion != null) return x;
+            if(nodo.definicion != null) return nodo;
             
-            for (int c = 0; c < 128; c++){
-                if(x.caracteres[c] != null) return x;
+            for (int c = 0; c < 256; c++){
+                if(nodo.caracteres[c] != null) return nodo;
             }
-            return null;
+            return new NodoTrie<T>();
         }
 
         public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra, int longitud){
