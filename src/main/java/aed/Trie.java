@@ -85,24 +85,30 @@ public class Trie<T> {
             for (int c = 0; c < 256; c++){
                 if(nodo.caracteres[c] != null) return nodo;
             }
-            return new NodoTrie<T>();
+            return null;
         }
 
-        public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra, int longitud){
-            NodoTrie<T> actual = raiz;
-            String nuevaRaiz;
-
-            for (int i = 0; i < longitud; i++){
-                if (actual.caracteres[i] != null){
-                    nuevaRaiz = raizPalabra + String.valueOf((char)i);
-                    if (actual.caracteres[i].definicion != null){
-                        agregarAca.add(nuevaRaiz);
-                    }
-                    Trie<T> buscarAca =new Trie<T>(actual.caracteres[i]);
-                    buscarAca.listaDeStrings(agregarAca, nuevaRaiz, longitud);
+        public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra) {
+            listaDeStringsHelper(agregarAca, raizPalabra, raiz);
+        }
+        
+        private void listaDeStringsHelper(ArrayList<String> agregarAca, String raizPalabra, NodoTrie<T> nodo) {
+            if (nodo == null) {
+                return;
+            }
+        
+            if (nodo.definicion != null) {
+                agregarAca.add(raizPalabra);
+            }
+        
+            for (int i = 0; i < 256; i++) {
+                if (nodo.caracteres[i] != null) {
+                    String nuevaRaiz = raizPalabra + (char) i;
+                    listaDeStringsHelper(agregarAca, nuevaRaiz, nodo.caracteres[i]);
                 }
             }
         }
+        
 
 
         //--------NODO--------------

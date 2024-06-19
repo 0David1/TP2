@@ -4,9 +4,9 @@ import aed.Trie.NodoTrie;
 
 public class Materia {
     //atributos de Materia
-    int [] CargoDocentes ;
-    listaEnlazada<String> libretas;
-    listaEnlazada<TrieStringPar> referencias;//con esto guardo la refencia de los tries que apuntan a esta materia
+    private int [] CargoDocentes ;
+    private listaEnlazada<String> libretas;
+    private listaEnlazada<TrieStringPar> referencias;//con esto guardo la refencia de los tries que apuntan a esta materia
    
     public Materia(){//generador de materia
         CargoDocentes = new int[4];
@@ -36,11 +36,17 @@ public class Materia {
         CargoDocentes[indice] ++;
     }
 
-    public int[] docentes(){//devuelo la lista de cantidad de
+    public int[] Docentes(){//devuelo la lista de cantidad de
         return CargoDocentes;
     }
 
+    public listaEnlazada<String> Libretas(){
+        return libretas;
+    }
 
+    public listaEnlazada<TrieStringPar> Referencias(){
+        return referencias;
+    }
 
 
 
