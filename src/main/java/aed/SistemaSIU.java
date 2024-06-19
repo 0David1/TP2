@@ -54,6 +54,12 @@ public class SistemaSIU {
             }
         }
     }
+    /*
+    Complejidad: la complejidad de esta funcion se cumple. Para empezar, dividamos la complejidad en 3 componentes:
+    La sumatoria de carreras multiplicado por la cantidad de materias de cada una se cumple, ya que se recorre el Trie de carreras la cantidad de veces que hay materias.
+    Luego, hay una sumatoria de materias con una sumatoria de la cantidad de referencias, que se hace con objetoMateria.agregarReferencia, que se ejecuta en el for una cantidad de veces igual a la cantidad de nobmres.
+    Por ultimo, se suma la cantidad de estudiantes, igual a la creacion de cada uno en el Trie de estudiantes, que es O(1) * E ya que el limite de caracteres esta acotado.
+    */
 
 
     //-----------METODOS
@@ -64,6 +70,10 @@ public class SistemaSIU {
         Materia objetoMateria = materiasDeCarrera.definicion(materia);
         objetoMateria.agregarAlumno(estudiante);
     }
+    /*
+    Complejidad: se cumple la complejidad ya que se recorre el Trie de carrera, y luego su Trie de materias asocidado, y las funciones dentro de estas son O(1).
+    Al ser acotado el Trie de estudiantes y hacer una operacion de O(1), no hace falta mencionarlo. (O(|c| + |m|))
+    */
 
     public void agregarDocente(CargoDocente cargo, String carrera, String materia) {
         Materia mate = carreras.definicion(carrera).definicion(materia);
@@ -83,16 +93,29 @@ public class SistemaSIU {
         }
     }
 
+    /*
+    Complejidad: se recorre el Trie de carreras, y luego su Trie de materias asociado y se suma el tipo de docente deseado. (O(|c| + |m|))
+    Como las materias equivalente de distintas materias llevan al mismo lugar, con agregar un docente aqui se cumple el requerimiento de sumar uno a sus equivalentes.
+    */
+
 
     public int[] plantelDocente(String materia, String carrera) {
         return carreras.definicion(carrera).definicion(materia).Docentes();
     }
 
+    /*
+    Complejidad: se recorre el Trie de carreras, y luego su Trie de materias asociado, y devuelve los docentes, esta ultima siendo O(1).
+    (O(|c| + |m|))
+    */
+
     public void cerrarMateria(String materia, String carrera) {
         Materia borrada = carreras.definicion(carrera).definicion(materia);
         borrada.eliminarMateria(estudiantes);//solo elimine los alumnos hasta aca
-
     }
+
+    /*
+    Complejidad: 
+    */
 
     public int inscriptos(String materia, String carrera) {
         return carreras.definicion(carrera).definicion(materia).Libretas().longitud();
