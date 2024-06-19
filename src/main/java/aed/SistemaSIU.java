@@ -85,7 +85,7 @@ public class SistemaSIU {
 
 
     public int[] plantelDocente(String materia, String carrera) {
-        return carreras.definicion(carrera).definicion(materia).docentes();
+        return carreras.definicion(carrera).definicion(materia).Docentes();
     }
 
     public void cerrarMateria(String materia, String carrera) {
@@ -95,7 +95,7 @@ public class SistemaSIU {
     }
 
     public int inscriptos(String materia, String carrera) {
-        return carreras.definicion(carrera).definicion(materia).libretas.longitud();
+        return carreras.definicion(carrera).definicion(materia).Libretas().longitud();
     }
 
     public boolean excedeCupo(String materia, String carrera) {
@@ -104,13 +104,13 @@ public class SistemaSIU {
 
     public String[] carreras() {
         ArrayList<String> resultado = new ArrayList<>();
-        carreras.listaDeStrings(resultado,"" , 256);
+        carreras.listaDeStrings(resultado,"");
         return resultado.toArray(new String[0]);
     }
 
     public String[] materias(String carrera) {
         ArrayList<String> resultado = new ArrayList<>();
-        carreras.definicion(carrera).listaDeStrings(resultado, "", 256);
+        carreras.definicion(carrera).listaDeStrings(resultado, "");
         return resultado.toArray(new String[0]);
     }
 

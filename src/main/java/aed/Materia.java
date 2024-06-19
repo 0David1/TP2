@@ -6,9 +6,9 @@ public class Materia {
     
     
     //-----------ATRIBUTOS--------------------------------
-    int [] CargoDocentes ;
-    listaEnlazada<String> libretas;
-    listaEnlazada<TrieStringPar> referencias;//con esto guardo la refencia de los tries que apuntan a esta materia
+    private int [] CargoDocentes ;
+    private listaEnlazada<String> libretas;
+    private listaEnlazada<TrieStringPar> referencias;//con esto guardo la refencia de los tries que apuntan a esta materia
     
 
 
@@ -46,10 +46,18 @@ public class Materia {
     public void CargarDocente(int indice){
         CargoDocentes[indice] ++;
     }
-    public int[] docentes(){
+
+    public int[] Docentes(){//devuelo la lista de cantidad de
         return CargoDocentes;
     }
 
+    public listaEnlazada<String> Libretas(){
+        return libretas;
+    }
+
+    public listaEnlazada<TrieStringPar> Referencias(){
+        return referencias;
+    }
 
 
     //-------------ELIMINAR MATERIA
