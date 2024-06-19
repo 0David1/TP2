@@ -28,7 +28,7 @@ public class Materia {
         int Ay2 = CargoDocentes[3];
         int cant = libretas.longitud();
 
-        return(250*Prof >= cant)  && (100*JefeTP >= cant) && (20*Ay1 >= cant) && (30*Ay2 >= cant);
+        return(250*Prof < cant)  || (100*JefeTP < cant) || (20*Ay1 < cant) || (30*Ay2 < cant);
     }
 
     public void CargarDocente(int indice){//agrego docente de tipo segun el indice.
