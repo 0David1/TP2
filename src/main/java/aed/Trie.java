@@ -3,16 +3,17 @@ package aed;
 import java.util.ArrayList;
 
 public class Trie<T> {
+        //--------ATRIBUTOS--------------
         private NodoTrie<T> raiz;
         private int cantidadDePalabras; //numero de palabras en el arbol
-
+        //--------CONSTRUCTORES--------------
         public Trie(){//constructor del trie
             raiz = new NodoTrie<T>();
         }
         public Trie(NodoTrie<T> nuevaRaiz){//constructor para cuando quiero hacer recursion.
             raiz = nuevaRaiz;
         }
-
+        //--------METODOS--------------
         public void definir(String palabra, T valor){//funcion define palabra en el trie
             int largoDePalabra = palabra.length();
             NodoTrie<T> actual = raiz;
@@ -66,7 +67,9 @@ public class Trie<T> {
         public void borrar(String palabra){
             raiz = borrar(raiz, palabra, 0);
         }
-
+        public NodoTrie<T> raiz(){
+            return raiz;
+        }
 
         private NodoTrie<T> borrar(NodoTrie<T> x, String palabra, int contador){
             if(x == null) return null;
@@ -120,7 +123,7 @@ public class Trie<T> {
             }
             return agregarAca;
         }
-
+        //--------NODO--------------
         @SuppressWarnings("hiding")//evita un warning
         public class NodoTrie<T>{
             NodoTrie<T>[] caracteres;
@@ -129,6 +132,12 @@ public class Trie<T> {
             public NodoTrie(){  
                 caracteres = new NodoTrie[256];
                 definicion = null;
+            }
+            public T definicion(){
+                return definicion;
+            }
+            public void definir(T nuevaDef){
+                definicion = nuevaDef;
             }
         }
 }

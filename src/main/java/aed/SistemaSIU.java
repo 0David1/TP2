@@ -28,24 +28,25 @@ public class SistemaSIU {
         // Trie carreras --> Trie materias -->Materia
         int j = 0, k = 0; // j itera sobre materias, y k itera sobre los nombres
         int cantidadDeMaterias = infoMaterias.length, cantidadDeNombres;// los limites de los iteradores anteriores
-        Materia objetoMateria;
         ParCarreraMateria[] nombresYCarreras;
         String nombreMateria, nombreCarrera;
         NodoTrie nodoADefinir;
 
         while (j < cantidadDeMaterias) {
-            objetoMateria = new Materia();// tengo que unir todos los nombres a este objeto
+            Materia objetoMateria = new Materia();// tengo que unir todos los nombres a este objeto
             nombresYCarreras = infoMaterias[j].getParesCarreraMateria();
             cantidadDeNombres = nombresYCarreras.length;
             while (k < cantidadDeNombres) {
                 nombreMateria = nombresYCarreras[k].getNombreMateria();
                 nombreCarrera = nombresYCarreras[k].getCarrera();
                 nodoADefinir = carreras.definirSiVacio(nombreCarrera);
-                if (nodoADefinir.definicion == null) {
-                    nodoADefinir.definicion = new Trie<Materia>();
+                Trie<Materia> dondeEs;
+                if (nodoADefinir.definicion() == null) {
+                    dondeEs = new Trie<Materia>();
+                    nodoADefinir.definir(dondeEs);
                 }
-                Trie<Materia> trieMateria = (Trie<Materia>)nodoADefinir.definicion;
-                trieMateria.definir(nombreMateria,objetoMateria);
+                dondeEs = (Trie<Materia>)nodoADefinir.definicion();
+                dondeEs.definir(nombreMateria,objetoMateria);
                 //En la ultima letra del trie carrera y la palabra carrera armo un trie de ese ultimo nodo del mismo y uso la funcion definicion("con la ultima letra de la palabra")
                 k++;
             }
@@ -86,8 +87,9 @@ public class SistemaSIU {
 
     public void inscribir(String estudiante, String carrera, String materia) {
         estudiantes.definir(estudiante ,estudiantes.definicion(estudiante) + 1);
-        carreras.definicion(carrera).definicion(materia).agregarAlumno(estudiante);
-
+        Trie<Materia> materiasDeCarrera = carreras.definicion(carrera);
+        Materia objetoMateria = materiasDeCarrera.definicion(materia);
+        objetoMateria.agregarAlumno(estudiante);
     }
 
     public void agregarDocente(CargoDocente cargo, String carrera, String materia) {
