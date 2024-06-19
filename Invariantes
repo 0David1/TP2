@@ -1,0 +1,25 @@
+Trie:
+/*
+Invariante de representacion: la cantidad de palabras, o definiciones, es menor o igual a la cantidad de nodos.
+Ademas, todo nodo o lleva a una unica definicion o a otro nodo o nodos.
+*/
+
+Lista enlazada: (parte de materia)
+/*
+Invariante de representacion: todo nodo menos el ultimo apunta a otro nodo, y el ultimo apunta a null. Ademas, todo nodo es apuntado por otro, excepto el primero, que no es apuntado por ninguno.
+*/
+
+Materia:
+/*
+Invariante de representacion: en cargoDocente, todo elemento es mayor o igual a cero, cargoDocente es de longitud 4, tamaño de referencias es mayor o igual a 1.
+*/
+
+SistemaSIU:
+/*
+Invariante de representacion: esta clase, al ser la que incorpora todas las demas, es la mas extensiva de todas, asi que iremos por partes.
+Para empezar, todo estudiante, materia y carrera del sistema existe en su Trie correspondiente. Ademas, el Trie de carreras lleva a un Trie de materias, y el de estudiantes a su cantidad de materias inscriptas.
+Todo valor que existe en libretaUniversitarias para cualquier materia, existe tambien en el Trie de estudiantes.
+El largo de materia.referencias, para cualquier materia, es menor o igual a la cantidad de carreras, es decir, a la cantidad de definiciones del Trie carreras.
+Para todo elemento en InfoMaterias, la carrera pertenece al Trie carreras y el nombre de la materia existe en el Trie materias asociado a esa carrera.
+La suma total de la cantidad de inscripciones de todos los estudiantes es igual a la suma de la longitud de libretasUniversitarias.
+*/
