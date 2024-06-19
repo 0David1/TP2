@@ -21,6 +21,15 @@ public class Materia {
     public void agregarAlumno(String libreta){//agrego alumno a la pila
         libretas.apilar(libreta);
     }
+    public boolean excedeCupo(){
+        int Prof = CargoDocentes[0];
+        int JefeTP = CargoDocentes[1];
+        int Ay1 = CargoDocentes[2];
+        int Ay2 = CargoDocentes[3];
+        int cant = libretas.longitud();
+
+        return(250*Prof >= cant)  && (100*JefeTP >= cant) && (20*Ay1 >= cant) && (30*Ay2 >= cant);
+    }
 
     public void CargarDocente(int indice){//agrego docente de tipo segun el indice.
         CargoDocentes[indice] ++;
@@ -81,15 +90,7 @@ public class Materia {
             Primero = nuevo;
             size ++;
         }
-        public bool excedeCupo(){
-            int Prof = CargoDocente[0];
-            int JefeTP = CargoDocente[1];
-            int Ay1 = CargoDocente[2];
-            int Ay2 = CargoDocente[3];
-            int cant = libretas.size();
 
-            return(250*Prof >= cant) and (100*JefeTP >= cant) && (20*Ay1 >= cant) && (30*Ay2 >= cant);
-        }
 
     }
 }
