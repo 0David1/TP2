@@ -67,9 +67,6 @@ public class Trie<T> {
         public void borrar(String palabra){
             raiz = borrar(raiz, palabra, 0);
         }
-        public NodoTrie<T> raiz(){
-            return raiz;
-        }
 
         private NodoTrie<T> borrar(NodoTrie<T> x, String palabra, int contador){
             if(x == null) return null;

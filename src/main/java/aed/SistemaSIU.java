@@ -65,7 +65,7 @@ public class SistemaSIU {
                     dondeEs = (Trie<Materia>)nodoADefinir.definicion();
                 }
                 dondeEs.definir(nombreMateria,objetoMateria);
-                //En la ultima letra del trie carrera y la palabra carrera armo un trie de ese ultimo nodo del mismo y uso la funcion definicion("con la ultima letra de la palabra")
+                objetoMateria.agregarReferencia(dondeEs, nombreMateria);
                 k++;
             }
             j++;
@@ -140,7 +140,8 @@ public class SistemaSIU {
 
     public void cerrarMateria(String materia, String carrera) {
         Materia borrada = carreras.definicion(carrera).definicion(materia);
-        borrada.eliminarMateria(estudiantes);
+        borrada.eliminarMateria(estudiantes);//solo elimine los alumnos hasta aca
+
     }
 
     public int inscriptos(String materia, String carrera) {

@@ -53,11 +53,11 @@ public class Materia {
             alumno = eliminarLibreta();
         }
 
-        TrieStringPar materia = eliminarReferencia();
-        while(materia != null){
-            Trie<Materia> trie = materia.trie();
-            trie.borrar(materia.nombre());
-            materia = eliminarReferencia();
+        TrieStringPar referencia = eliminarReferencia();
+        while(referencia != null){
+            Trie<Materia> trie = referencia.trie();
+            trie.borrar(referencia.nombre());
+            referencia = eliminarReferencia();
         }
     }
 
