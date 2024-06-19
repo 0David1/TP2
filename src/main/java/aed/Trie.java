@@ -135,3 +135,9 @@ public class Trie<T> {
             }
         }
 }
+
+
+/*
+Invariante de representacion: la cantidad de palabras, o definiciones, es menor o igual a la cantidad de nodos.
+Ademas, todo nodo o lleva a una unica definicion o a otro nodo o nodos.
+*/
