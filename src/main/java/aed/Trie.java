@@ -91,38 +91,23 @@ public class Trie<T> {
             return null;
         }
 
-        public String[] listaDeStrings(){
-            ArrayList<String> resultado = new ArrayList<>();
+        public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra, int longitud){
             NodoTrie<T> actual = raiz;
-            int longitud = actual.caracteres.length;
-            String palabra ;
-            for (int i = 0 ; i < longitud; i++){
-                if (actual.caracteres[i] != null){
-                    palabra = String.valueOf((char) i );
-                    if (actual.definicion != null){
-                        resultado.add(palabra);
-                    }
-                    Trie<T> buscarAca = new Trie<T>(actual.caracteres[i]);
-                    buscarAca.listaDeStrings(resultado,palabra,longitud);
-                }
-            }
+            String nuevaRaiz;
 
-            return resultado.toArray(new String[0]);
-        }
-        public ArrayList<String> listaDeStrings(ArrayList<String> agregarAca, String raizPalabra, int longitud){
-            NodoTrie<T> actual = raiz;
             for (int i = 0; i < longitud; i++){
-                if (actual.caracteres[i]!= null){
-                    raizPalabra = raizPalabra + String.valueOf((char)i);
-                    if (actual.definicion != null){
-                        agregarAca.add(raizPalabra);
+                if (actual.caracteres[i] != null){
+                    nuevaRaiz = raizPalabra + String.valueOf((char)i);
+                    if (actual.caracteres[i].definicion != null){
+                        agregarAca.add(nuevaRaiz);
                     }
                     Trie<T> buscarAca =new Trie<T>(actual.caracteres[i]);
-                    buscarAca.listaDeStrings(agregarAca, raizPalabra, longitud);
+                    buscarAca.listaDeStrings(agregarAca, nuevaRaiz, longitud);
                 }
             }
-            return agregarAca;
         }
+
+
         //--------NODO--------------
         @SuppressWarnings("hiding")//evita un warning
         public class NodoTrie<T>{

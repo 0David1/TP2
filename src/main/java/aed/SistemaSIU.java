@@ -1,5 +1,5 @@
 package aed;
-
+import java.util.*;
 import aed.Trie.NodoTrie;
 
 public class SistemaSIU {
@@ -152,15 +152,34 @@ public class SistemaSIU {
     }
 
     public String[] carreras() {
-        return carreras.listaDeStrings();
+        ArrayList<String> resultado = new ArrayList<>();
+        carreras.listaDeStrings(resultado,"" , 256);
+        return resultado.toArray(new String[0]);
     }
 
     public String[] materias(String carrera) {
-        return carreras.definicion(carrera).listaDeStrings();
+        ArrayList<String> resultado = new ArrayList<>();
+        carreras.definicion(carrera).listaDeStrings(resultado, "", 256);
+        return resultado.toArray(new String[0]);
     }
 
     public int materiasInscriptas(String estudiante) {
         return estudiantes.definicion(estudiante);
     } // la complejidad de esta funcion claramente es O(1) ya que estamos buscando la
       // definicion de un Trie con tamaño acotado.
+
+    public static void main(String[] args) {
+        InfoMateria[] infoMaterias = new InfoMateria[] {
+            new InfoMateria(new ParCarreraMateria[] {new ParCarreraMateria("Ciencias de la Computación", "Intro a la Programación"), new ParCarreraMateria("Ciencias de Datos", "Algoritmos1")}),
+            new InfoMateria(new ParCarreraMateria[] {new ParCarreraMateria("Ciencias de la Computación", "Algoritmos"), new ParCarreraMateria("Ciencias de Datos", "Algoritmos2")}),
+            new InfoMateria(new ParCarreraMateria[] {new ParCarreraMateria("Ciencias de la Computación", "Técnicas de Diseño de Algoritmos"), new ParCarreraMateria("Ciencias de Datos", "Algoritmos3")}),
+            new InfoMateria(new ParCarreraMateria[] {new ParCarreraMateria("Ciencias de la Computación", "Análisis I"), new ParCarreraMateria("Ciencias de Datos", "Análisis I"), new ParCarreraMateria("Ciencias Físicas", "Matemática 1"), new ParCarreraMateria("Ciencias Químicas", "Análisis Matemático I"), new ParCarreraMateria("Ciencias Matemáticas", "Análisis I") }),
+            new InfoMateria(new ParCarreraMateria[] {new ParCarreraMateria("Ciencias Biológicas", "Química General e Inorgánica 1"), new ParCarreraMateria("Ciencias Químicas", "Química General")}),
+            new InfoMateria(new ParCarreraMateria[] {new ParCarreraMateria("Ciencias Matemáticas", "Análisis II"), new ParCarreraMateria("Ciencias de Datos", "Análisis II"), new ParCarreraMateria("Ciencias Físicas", "Matemática 3"), new ParCarreraMateria("Ciencias Químicas", "Análisis Matemático II")})
+        };
+        String [] estudiantes = new String[] {"123/23", "321/24", "122/99", "314/81", "391/18", "478/19", "942/20", "291/18", "382/19", "892/22", "658/13", "217/12", "371/11", "294/20"};
+        SistemaSIU sistema = new SistemaSIU(infoMaterias, estudiantes);
+        System.out.println(sistema.carreras().toString());
+
+    }
 }
