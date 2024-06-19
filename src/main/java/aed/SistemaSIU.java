@@ -139,7 +139,8 @@ public class SistemaSIU {
     }
 
     public void cerrarMateria(String materia, String carrera) {
-        throw new UnsupportedOperationException("Método no implementado aún");
+        Materia borrada = carreras.definicion(carrera).definicion(materia);
+        borrada.eliminarMateria(estudiantes);
     }
 
     public int inscriptos(String materia, String carrera) {

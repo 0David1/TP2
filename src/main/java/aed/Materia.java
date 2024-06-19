@@ -1,5 +1,6 @@
 package aed;
 
+import aed.Trie.NodoTrie;
 
 public class Materia {
     //atributos de Materia
@@ -38,6 +39,28 @@ public class Materia {
     public int[] docentes(){//devuelo la lista de cantidad de
         return CargoDocentes;
     }
+
+
+
+
+
+    public void eliminarMateria(Trie<Integer> alumnos){
+        String alumno = eliminarLibreta();
+        NodoTrie nodo;
+        while (alumno != null){
+            nodo = alumnos.definirSiVacio(alumno);
+            nodo.definicion =(int)nodo.definicion - 1;
+            alumno = eliminarLibreta();
+        }
+
+        TrieStringPar materia = eliminarReferencia();
+        while(materia != null){
+            Trie<Materia> trie = materia.trie();
+            trie.borrar(materia.nombre());
+            materia = eliminarReferencia();
+        }
+    }
+
     public String eliminarLibreta(){//lo voy a usar para borrar esta materia
         return libretas.desapilar();
     }
@@ -45,12 +68,21 @@ public class Materia {
         return referencias.desapilar();//esto es un triestring par con eso tengo que acceder al trie y eliminar esa palabra del "diccionario"
     }
 
+
+
+
     public class TrieStringPar{//cree un tipo de dato que relaciona el trie donde esta uno de los nombres de la materia, con el nombre que deberia estar.
-        String NombreDeLaMateria;
-        Trie<Materia> TrieDondeEsta;
+        private String NombreDeLaMateria;
+        private Trie<Materia> TrieDondeEsta;
         public TrieStringPar(Trie<Materia> Materias, String nombreEspecifico){
             NombreDeLaMateria = nombreEspecifico;
             TrieDondeEsta = Materias;
+        }
+        public String nombre(){
+            return NombreDeLaMateria;
+        }
+        public Trie<Materia> trie(){
+            return TrieDondeEsta;
         }
     }
 
