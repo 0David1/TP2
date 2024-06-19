@@ -3,18 +3,24 @@ package aed;
 import java.util.ArrayList;
 
 public class Trie<T> {
+        
+    
         //--------ATRIBUTOS--------------
         private NodoTrie<T> raiz;
-        private int cantidadDePalabras; //numero de palabras en el arbol
+        private int cantidadDePalabras; 
+        
+        
         //--------CONSTRUCTORES--------------
         public Trie(){//constructor del trie
             raiz = new NodoTrie<T>();
         }
-        public Trie(NodoTrie<T> nuevaRaiz){//constructor para cuando quiero hacer recursion.
+        public Trie(NodoTrie<T> nuevaRaiz){
             raiz = nuevaRaiz;
         }
+
+
         //--------METODOS--------------
-        public void definir(String palabra, T valor){//funcion define palabra en el trie
+        public void definir(String palabra, T valor){
             int largoDePalabra = palabra.length();
             NodoTrie<T> actual = raiz;
             for (int i = 0; i < largoDePalabra; i ++){
@@ -28,8 +34,9 @@ public class Trie<T> {
             }
             actual.definicion = valor;
             cantidadDePalabras++;
-        }   
-        public NodoTrie<T> definirSiVacio(String palabra){//si el camino a la definicion no esta hecho lo hace, si no devuelve el ultimo nodo donde deberia estar la definicion.
+        }
+        
+        public NodoTrie<T> definirSiVacio(String palabra){
             int largoDePalabra = palabra.length();
             NodoTrie<T> actual = raiz;
             for (int i = 0; i < largoDePalabra; i++){
@@ -52,11 +59,11 @@ public class Trie<T> {
             NodoTrie<T> actual = raiz;
             for (int i = 0; i < largoDePalabra; i ++){
                 actual = actual.caracteres[(int)palabra.charAt(i)];
-                if (actual == null){//si la palabra no esta definida devuelve null.
+                if (actual == null){
                     return null;
                 }
             }
-            return actual.definicion;//actual.definicion puede ser null si el nodo no tiene definido nada, chequear en las funciones.
+            return actual.definicion;
         }
 
 
@@ -64,6 +71,8 @@ public class Trie<T> {
             return cantidadDePalabras;
         }
 
+
+        //--------RELACIONADO CON EJERCICIO CERRAR MATERIA
         public void borrar(String palabra){
             raiz = borrar(raiz, palabra, 0);
         }
@@ -71,13 +80,13 @@ public class Trie<T> {
         private NodoTrie<T> borrar(NodoTrie<T> nodo, String palabra, int contador){
             if(nodo == null) return null;
 
-            if(contador == palabra.length() ){//caso base ya estoy al final de la palabra
+            if(contador == palabra.length() ){
                 if(nodo.definicion != null) cantidadDePalabras--;
                 nodo.definicion = null;
             }
-            else {//no estoy en la ultima letra
+            else {
                 int letraActual = palabra.charAt(contador);
-                nodo.caracteres[letraActual] = borrar(nodo.caracteres[letraActual], palabra, contador+1);//manda al nodo siquiente a borrar.
+                nodo.caracteres[letraActual] = borrar(nodo.caracteres[letraActual], palabra, contador+1);
             }
 
             if(nodo.definicion != null) return nodo;
@@ -85,38 +94,35 @@ public class Trie<T> {
             for (int c = 0; c < 256; c++){
                 if(nodo.caracteres[c] != null) return nodo;
             }
-            return null;
+            return new NodoTrie<T>();
         }
 
-        public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra) {
-            listaDeStringsHelper(agregarAca, raizPalabra, raiz);
-        }
-        
-        private void listaDeStringsHelper(ArrayList<String> agregarAca, String raizPalabra, NodoTrie<T> nodo) {
-            if (nodo == null) {
-                return;
-            }
-        
-            if (nodo.definicion != null) {
-                agregarAca.add(raizPalabra);
-            }
-        
-            for (int i = 0; i < 256; i++) {
-                if (nodo.caracteres[i] != null) {
-                    String nuevaRaiz = raizPalabra + (char) i;
-                    listaDeStringsHelper(agregarAca, nuevaRaiz, nodo.caracteres[i]);
+        //--------RELACIONADO CON EJERCICIO CARRERAS Y EJERCICIO MATERIAS
+        public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra, int longitud){
+            NodoTrie<T> actual = raiz;
+            String nuevaRaiz;
+
+            for (int i = 0; i < longitud; i++){
+                if (actual.caracteres[i] != null){
+                    nuevaRaiz = raizPalabra + String.valueOf((char)i);
+                    if (actual.caracteres[i].definicion != null){
+                        agregarAca.add(nuevaRaiz);
+                    }
+                    Trie<T> buscarAca =new Trie<T>(actual.caracteres[i]);
+                    buscarAca.listaDeStrings(agregarAca, nuevaRaiz, longitud);
                 }
             }
         }
+
+        //----------SUBCLASES DE TRIE NECESARIOS------
+
         
-
-
         //--------NODO--------------
-        @SuppressWarnings("hiding")//evita un warning
+        @SuppressWarnings("hiding")
         public class NodoTrie<T>{
             NodoTrie<T>[] caracteres;
             T definicion;
-            @SuppressWarnings("unchecked")//evita un warning
+            @SuppressWarnings("unchecked")
             public NodoTrie(){  
                 caracteres = new NodoTrie[256];
                 definicion = null;
