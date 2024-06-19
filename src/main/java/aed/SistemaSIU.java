@@ -38,13 +38,14 @@ public class SistemaSIU {
             nombresYCarreras = infoMaterias[j].getParesCarreraMateria();
             cantidadDeNombres = nombresYCarreras.length;
             while (k < cantidadDeNombres) {
-                nombreMateria = nombresYCarreras[k].nombreMateria;
-                nombreCarrera = nombresYCarreras[k].nombreMateria;
+                nombreMateria = nombresYCarreras[k].getNombreMateria();
+                nombreCarrera = nombresYCarreras[k].getCarrera();
                 nodoADefinir = carreras.definirSiVacio(nombreCarrera);
                 if (nodoADefinir.definicion == null) {
                     nodoADefinir.definicion = new Trie<Materia>();
                 }
-                //nodoADefinir.definicion.definirSiVacio(nombreMateria);
+                Trie<Materia> trieMateria = (Trie<Materia>)nodoADefinir.definicion;
+                trieMateria.definir(nombreMateria,objetoMateria);
                 //En la ultima letra del trie carrera y la palabra carrera armo un trie de ese ultimo nodo del mismo y uso la funcion definicion("con la ultima letra de la palabra")
                 k++;
             }

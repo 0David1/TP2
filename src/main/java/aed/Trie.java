@@ -127,7 +127,7 @@ public class Trie<T> {
             T definicion;
             @SuppressWarnings("unchecked")//evita un warning
             public NodoTrie(){  
-                caracteres = new NodoTrie[128];
+                caracteres = new NodoTrie[256];
                 definicion = null;
             }
         }
