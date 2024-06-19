@@ -13,6 +13,13 @@ public class SistemaSIU {
     Trie<Integer> estudiantes;
     Trie<Trie<Materia>> carreras;
 
+
+
+
+
+
+
+
     public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias) {
         estudiantes = new Trie<Integer>();
         carreras = new Trie<Trie<Materia>>();
@@ -25,17 +32,26 @@ public class SistemaSIU {
             i++;
         } // Total = O (E)
 
+
+
+
+
+
+
+
+
         // Trie carreras --> Trie materias -->Materia
-        int j = 0, k = 0; // j itera sobre materias, y k itera sobre los nombres
+        int j = 0; // j itera sobre materias, y k itera sobre los nombres
         int cantidadDeMaterias = infoMaterias.length, cantidadDeNombres;// los limites de los iteradores anteriores
         ParCarreraMateria[] nombresYCarreras;
         String nombreMateria, nombreCarrera;
-        NodoTrie nodoADefinir;
 
         while (j < cantidadDeMaterias) {
+            int k = 0;
             Materia objetoMateria = new Materia();// tengo que unir todos los nombres a este objeto
             nombresYCarreras = infoMaterias[j].getParesCarreraMateria();
             cantidadDeNombres = nombresYCarreras.length;
+            NodoTrie nodoADefinir;
             while (k < cantidadDeNombres) {
                 nombreMateria = nombresYCarreras[k].getNombreMateria();
                 nombreCarrera = nombresYCarreras[k].getCarrera();
@@ -45,13 +61,20 @@ public class SistemaSIU {
                     dondeEs = new Trie<Materia>();
                     nodoADefinir.definir(dondeEs);
                 }
-                dondeEs = (Trie<Materia>)nodoADefinir.definicion();
+                else{
+                    dondeEs = (Trie<Materia>)nodoADefinir.definicion();
+                }
                 dondeEs.definir(nombreMateria,objetoMateria);
                 //En la ultima letra del trie carrera y la palabra carrera armo un trie de ese ultimo nodo del mismo y uso la funcion definicion("con la ultima letra de la palabra")
                 k++;
             }
             j++;
         }
+
+
+
+
+
 
         // int j = 0; //itera sobre materias
         // int k = 0;//itera sobre nombres de materia
