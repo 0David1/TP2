@@ -71,8 +71,8 @@ public class SistemaSIU {
         objetoMateria.agregarAlumno(estudiante);
     }
     /*
-    Complejidad: se cumple la complejidad ya que se recorre el Trie de carrera, y luego su Trie de materias asocidado, y las funciones dentro de estas son O(1).
-    Al ser acotado el Trie de estudiantes y hacer una operacion de O(1), no hace falta mencionarlo. (O(|c| + |m|))
+    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|), y se agrega un estudiante a estos (O(1)).
+    Al ser acotado el Trie de estudiantes y hacer una operacion de O(1), no hace falta mencionarlo.
     */
 
     public void agregarDocente(CargoDocente cargo, String carrera, String materia) {
@@ -94,7 +94,7 @@ public class SistemaSIU {
     }
 
     /*
-    Complejidad: se recorre el Trie de carreras, y luego su Trie de materias asociado y se suma el tipo de docente deseado. (O(|c| + |m|))
+    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|) y se suma el tipo de docente deseado (O(1))
     Como las materias equivalente de distintas materias llevan al mismo lugar, con agregar un docente aqui se cumple el requerimiento de sumar uno a sus equivalentes.
     */
 
@@ -104,8 +104,7 @@ public class SistemaSIU {
     }
 
     /*
-    Complejidad: se recorre el Trie de carreras, y luego su Trie de materias asociado, y devuelve los docentes, esta ultima siendo O(1).
-    (O(|c| + |m|))
+    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|), y devuelve los docentes (O(1)).
     */
 
     public void cerrarMateria(String materia, String carrera) {
@@ -114,16 +113,26 @@ public class SistemaSIU {
     }
 
     /*
-    Complejidad: 
+    Complejidad: para empezar, la complejidad de |c| se cumple al recorrer el Trie de carreras, y tambien la de |m| al buscar la materia a borrar.
+    Luego, como se ve en la clase de Materia, se elimina una por una las referencias de la materia, lo cual es la sumatoria de la longitud de cada nombre.
+    Por ultimo, se reduce la cantidad de materias inscriptas a cada alumno de dicha materia por uno, por lo que se recorre su Trie O(1) * Em veces.
     */
 
     public int inscriptos(String materia, String carrera) {
         return carreras.definicion(carrera).definicion(materia).Libretas().longitud();
     }
+    
+    /*
+    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|), y se devuelve la longitud de inscriptos (O(1)).
+    */
 
     public boolean excedeCupo(String materia, String carrera) {
         return carreras.definicion(carrera).definicion(materia).excedeCupo();
     }
+    
+    /*
+    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|), y se devuelve el resultado de la funcion excedeCupo (O(1), ya que son cuentas matematicas y comparaciones entre booleanos).
+    */
 
     public String[] carreras() {
         ArrayList<String> resultado = new ArrayList<>();
@@ -131,15 +140,27 @@ public class SistemaSIU {
         return resultado.toArray(new String[0]);
     }
 
+    /*
+    Complejidad: 
+    */
+
     public String[] materias(String carrera) {
         ArrayList<String> resultado = new ArrayList<>();
         carreras.definicion(carrera).listaDeStrings(resultado, "");
         return resultado.toArray(new String[0]);
     }
 
+    /*
+    Complejidad: 
+    */
+
     public int materiasInscriptas(String estudiante) {
         return estudiantes.definicion(estudiante);
-    } 
+    }
+
+    /*
+    Complejidad: se recorre el Trie de estudiantes y se devuelve la cantidad de materias inscriptas. Como la longitud de estudiante esta acotado, termina siendo O(1).
+    */
 }
 
 /*
