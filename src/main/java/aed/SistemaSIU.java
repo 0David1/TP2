@@ -141,7 +141,8 @@ public class SistemaSIU {
     }
 
     /*
-    Complejidad: 
+    Complejidad: Se recorre el Trie de carreras la cantidad de veces que hay carreras, cumpliendo la complejidad de sumatoria de longitud de la clave carrera para todas las carreras.
+    Aclaracion: en la funcion de la clase Trie se ve que se cicla usando un entero i que llega hasta 256. Aunque podria considerarse como "acotado", el codigo ASCII tiene 256 caracteres, por lo cual lo elejimos para representar una longitud no acotada de clave.
     */
 
     public String[] materias(String carrera) {
@@ -151,7 +152,7 @@ public class SistemaSIU {
     }
 
     /*
-    Complejidad: 
+    Complejidad: lo mismo que el ejercicio anterior, solo que primero se recorre el Trie de carreras y luego se devuelve las materias del Trie asociado a esta carrera, cumpliendo la complejidad propuesta.
     */
 
     public int materiasInscriptas(String estudiante) {
