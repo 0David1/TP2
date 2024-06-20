@@ -142,7 +142,13 @@ public class Materia {
             Primero = nuevo;
             size ++;
         }
-
+        /*
+        Invariante de representacion: todo nodo menos el ultimo apunta a otro nodo, y el ultimo apunta a null. Ademas, todo nodo es apuntado por otro, excepto el primero, que no es apuntado por ninguno.
+        */
 
     }
 }
+
+/*
+Invariante de representacion: en cargoDocente, todo elemento es mayor o igual a cero, cargoDocente es de longitud 4, tamaño de referencias es mayor o igual a 1.
+*/
