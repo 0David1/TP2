@@ -51,6 +51,8 @@ public class SistemaSIU {
                 }
                 dondeEs.definir(nombreMateria,objetoMateria);
                 objetoMateria.agregarReferencia(dondeEs, nombreMateria);
+                
+                //para objetoMateria, es intencional el uso de aliasing ya que queremos cambiar la direccion de materia para cualquier nombre con la que busques a esa materia.
             }
         }
     }
