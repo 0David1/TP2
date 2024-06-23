@@ -121,7 +121,7 @@ public class SistemaSIU {
     */
 
     public int inscriptos(String materia, String carrera) {
-        return carreras.definicion(carrera).definicion(materia).Libretas().longitud();
+        return carreras.definicion(carrera).definicion(materia).numeroDeLibretas();
     }
     
     /*
