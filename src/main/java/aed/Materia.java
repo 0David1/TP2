@@ -50,16 +50,11 @@ public class Materia {
     public int[] Docentes(){
         return CargoDocentes;
     }//Complejidad O(1)
-
-
-    // //----------
-    // public listaEnlazada<String> Libretas(){
-    //     return libretas;
-    // }
-
-    // public listaEnlazada<TrieStringPar> Referencias(){
-    //     return referencias;
-    // }
+    
+    //---------INSCRIPTOS A MATERIA
+    public int numeroDeLibretas(){
+        return libretas.longitud();
+    }//O(1)
 
 
     //-------------ELIMINAR MATERIA
@@ -79,10 +74,11 @@ public class Materia {
             referencia = eliminarReferencia();
         }
     }
-    public String eliminarLibreta(){
+
+    private String eliminarLibreta(){
         return libretas.desapilar();
     }
-    public TrieStringPar eliminarReferencia(){
+    private TrieStringPar eliminarReferencia(){
         return referencias.desapilar();
     }
 
