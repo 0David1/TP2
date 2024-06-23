@@ -29,11 +29,11 @@ public class SistemaSIU {
 
 
         // Trie carreras --> Trie materias -->Materia
-        int cantidadDeMaterias = infoMaterias.length, cantidadDeNombres;// los limites de los iteradores anteriores
+        int cantidadDeMaterias = infoMaterias.length, cantidadDeNombres;
         ParCarreraMateria[] nombresYCarreras;
         String nombreMateria, nombreCarrera;
         for (int materia = 0 ; materia <cantidadDeMaterias; materia++){
-            Materia objetoMateria = new Materia();// tengo que unir todos los nombres a este objeto
+            Materia objetoMateria = new Materia();//para objetoMateria, es intencional el uso de aliasing ya que queremos cambiar la direccion de materia para cualquier nombre con la que busques a esa materia.
             nombresYCarreras = infoMaterias[materia].getParesCarreraMateria();
             cantidadDeNombres = nombresYCarreras.length;
             NodoTrie nodoADefinir;
@@ -52,15 +52,14 @@ public class SistemaSIU {
                 dondeEs.definir(nombreMateria,objetoMateria);
                 objetoMateria.agregarReferencia(dondeEs, nombreMateria);
                 
-                //para objetoMateria, es intencional el uso de aliasing ya que queremos cambiar la direccion de materia para cualquier nombre con la que busques a esa materia.
             }
         }
     }
     /*
     Complejidad: la complejidad de esta funcion se cumple. Para empezar, dividamos la complejidad en 3 componentes:
-    La sumatoria de carreras multiplicado por la cantidad de materias de cada una se cumple, ya que se recorre el Trie de carreras la cantidad de veces que hay materias.
-    Luego, hay una sumatoria de materias con una sumatoria de la cantidad de referencias, que se hace con objetoMateria.agregarReferencia, que se ejecuta en el for una cantidad de veces igual a la cantidad de nobmres.
-    Por ultimo, se suma la cantidad de estudiantes, igual a la creacion de cada uno en el Trie de estudiantes, que es O(1) * E ya que el limite de caracteres esta acotado.
+    La sumatoria de carreras multiplicado por la cantidad de materias de cada una se cumple, ya que se recorre el Trie de carreras la cantidad de veces que hay materias en esa carrera.
+    Luego, hay una sumatoria de materias con una sumatoria de la cantidad de nombres de esa materia de la longitud de nombre de la materia, que se cumple ya que se recorre cuando inscribo el par carreraMateria.
+    Por ultimo, se suma la cantidad de estudiantes, igual a la creacion de cada uno en el Trie de estudiantes, que es O(1) * E ya que el limite de cantidad de caracteres esta acotado.
     */
 
 
@@ -73,8 +72,9 @@ public class SistemaSIU {
         objetoMateria.agregarAlumno(estudiante);
     }
     /*
-    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|), y se agrega un estudiante a estos (O(1)).
-    Al ser acotado el Trie de estudiantes y hacer una operacion de O(1), no hace falta mencionarlo.
+    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|), y se agrega un estudiante al objetoMateria, que como se suma un elemento 
+    a la cola (O(1)).Por aliasing el valor cambia no importa con que nombre busquemos la materia.
+    Para sumar una inscripcion al estudiante, al ser acotado el Trie de estudiantes y hacer una operacion sobre la definicion, la complejidad es O(1)
     */
 
     public void agregarDocente(CargoDocente cargo, String carrera, String materia) {
@@ -96,7 +96,7 @@ public class SistemaSIU {
     }
 
     /*
-    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|) y se suma el tipo de docente deseado (O(1))
+    Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|) y se suma el tipo de docente deseado que es una operacion (O(1)) al objetoMateria.
     Como las materias equivalente de distintas materias llevan al mismo lugar, con agregar un docente aqui se cumple el requerimiento de sumar uno a sus equivalentes.
     */
 
@@ -111,7 +111,7 @@ public class SistemaSIU {
 
     public void cerrarMateria(String materia, String carrera) {
         Materia borrada = carreras.definicion(carrera).definicion(materia);
-        borrada.eliminarMateria(estudiantes);//solo elimine los alumnos hasta aca
+        borrada.eliminarMateria(estudiantes);
     }
 
     /*
@@ -144,7 +144,6 @@ public class SistemaSIU {
 
     /*
     Complejidad: Se recorre el Trie de carreras la cantidad de veces que hay carreras, cumpliendo la complejidad de sumatoria de longitud de la clave carrera para todas las carreras.
-    Aclaracion: en la funcion de la clase Trie se ve que se cicla usando un entero i que llega hasta 256. Aunque podria considerarse como "acotado", el codigo ASCII tiene 256 caracteres, por lo cual lo elejimos para representar una longitud no acotada de clave.
     */
 
     public String[] materias(String carrera) {
@@ -154,7 +153,7 @@ public class SistemaSIU {
     }
 
     /*
-    Complejidad: lo mismo que el ejercicio anterior, solo que primero se recorre el Trie de carreras y luego se devuelve las materias del Trie asociado a esta carrera, cumpliendo la complejidad propuesta.
+    Complejidad: lo mismo que el ejercicio anterior, solo que primero se busca la carrera en el Trie de carreras y luego se devuelve las materias del Trie asociado a esta carrera, cumpliendo la complejidad propuesta.
     */
 
     public int materiasInscriptas(String estudiante) {
