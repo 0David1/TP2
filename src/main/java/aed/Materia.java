@@ -8,7 +8,7 @@ public class Materia {
     //-----------ATRIBUTOS--------------------------------
     private int [] CargoDocentes ;
     private listaEnlazada<String> libretas;
-    private listaEnlazada<TrieStringPar> referencias;//con esto guardo la refencia de los tries que apuntan a esta materia
+    private listaEnlazada<TrieStringPar> referencias;
     
 
 
@@ -16,22 +16,22 @@ public class Materia {
 
         
     //-----------CONSTRUCTOR
-    public Materia(){//generador de materia
+    public Materia(){
         CargoDocentes = new int[4];
         libretas = new listaEnlazada<String>();
         referencias = new listaEnlazada<TrieStringPar>();
-    }
+    }//complejidad O(1)
 
 
     //-------ARMADO DE MATERIA
     public void agregarReferencia(Trie<Materia> trieDeLaMateria, String Materia){
         TrieStringPar valor = new TrieStringPar(trieDeLaMateria, Materia);
         referencias.apilar(valor);
-    }
+    }//Complejidad : O(1)
     
     public void agregarAlumno(String libreta){
         libretas.apilar(libreta);
-    }
+    }//Complejidad : O(1)
     
     //----------DOCENTES
     public boolean excedeCupo(){
@@ -42,22 +42,24 @@ public class Materia {
         int cant = libretas.longitud();
 
         return(250*Prof < cant)  || (100*JefeTP < cant) || (20*Ay1 < cant) || (30*Ay2 < cant);
-    }
+    }//Complejidad O(1)
     public void CargarDocente(int indice){
         CargoDocentes[indice] ++;
-    }
+    }//Complejidad O(1)
 
-    public int[] Docentes(){//devuelo la lista de cantidad de
+    public int[] Docentes(){
         return CargoDocentes;
-    }
+    }//Complejidad O(1)
 
-    public listaEnlazada<String> Libretas(){
-        return libretas;
-    }
 
-    public listaEnlazada<TrieStringPar> Referencias(){
-        return referencias;
-    }
+    // //----------
+    // public listaEnlazada<String> Libretas(){
+    //     return libretas;
+    // }
+
+    // public listaEnlazada<TrieStringPar> Referencias(){
+    //     return referencias;
+    // }
 
 
     //-------------ELIMINAR MATERIA
