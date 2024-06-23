@@ -171,5 +171,5 @@ Para empezar, todo estudiante, materia y carrera del sistema existe en su Trie c
 Todo valor que existe en libretaUniversitarias para cualquier materia, existe tambien en el Trie de estudiantes.
 El largo de materia.referencias, para cualquier materia, es menor o igual a la cantidad de carreras, es decir, a la cantidad de definiciones del Trie carreras.
 Para todo elemento en InfoMaterias, la carrera pertenece al Trie carreras y el nombre de la materia existe en el Trie materias asociado a esa carrera.
-La suma total de la cantidad de inscripciones de todos los estudiantes es igual a la suma de la longitud de libretasUniversitarias.
+La suma total de la cantidad de inscripciones de todos los estudiantes es igual a la suma total de de la longitud de libretasUniversitarias de las materias.
 */
