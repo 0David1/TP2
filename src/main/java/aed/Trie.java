@@ -35,6 +35,7 @@ public class Trie<T> {
             actual.definicion = valor;
             cantidadDePalabras++;
         }
+        //complejidad: O(|palabra|)
         
         public NodoTrie<T> definirSiVacio(String palabra){
             int largoDePalabra = palabra.length();
@@ -53,6 +54,7 @@ public class Trie<T> {
             }
             return actual;
         }
+        //complejidad: O(|palabra|)
 
         public T definicion (String palabra){
             int largoDePalabra = palabra.length();
@@ -64,12 +66,12 @@ public class Trie<T> {
                 }
             }
             return actual.definicion;
-        }
+        }//complejidad O(|palabra|)
 
 
         public int tamaño(){
             return cantidadDePalabras;
-        }
+        }//complejidad O(1)
 
 
         //--------RELACIONADO CON EJERCICIO CERRAR MATERIA
@@ -117,7 +119,8 @@ public class Trie<T> {
                     listaDeStringsHelper(agregarAca, nuevaRaiz, nodo.caracteres[i]);
                 }
             }
-        }
+        }//complejidad: O(sumatoria de longitud de claves en el trie), ya que la funcion recorre todos los nodos de las claves para armar la palabra, en el peor de los casos no tienen ningun caracter en comun.
+
 
         //----------SUBCLASES DE TRIE NECESARIOS------
 
@@ -144,5 +147,5 @@ public class Trie<T> {
 
 /*
 Invariante de representacion: la cantidad de palabras, o definiciones, es menor o igual a la cantidad de nodos.
-Ademas, todo nodo o lleva a una unica definicion o a otro nodo o nodos.
+Ademas, todo nodo o lleva a una unica definicion o a otro nodo o nodos, a menos que el trie no tenga ninguna definicion.
 */
