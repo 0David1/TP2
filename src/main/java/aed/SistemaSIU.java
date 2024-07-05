@@ -139,7 +139,7 @@ public class SistemaSIU {
     */
 
     public String[] carreras() {
-        ArrayList<String> resultado = new ArrayList<>();
+        ArrayList<String> resultado = new ArrayList<>(carreras.tamaño());
         carreras.listaDeStrings(resultado,"");
         return resultado.toArray(new String[0]);
     }
@@ -149,7 +149,7 @@ public class SistemaSIU {
     */
 
     public String[] materias(String carrera) {
-        ArrayList<String> resultado = new ArrayList<>();
+        ArrayList<String> resultado = new ArrayList<>(carreras.definicion(carrera).tamaño());
         carreras.definicion(carrera).listaDeStrings(resultado, "");
         return resultado.toArray(new String[0]);
     }

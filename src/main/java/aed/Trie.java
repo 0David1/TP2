@@ -32,13 +32,12 @@ public class Trie<T> {
         for (int i = 0; i < palabra.length(); i++) {
             char caracterActual = palabra.charAt(i);
             if (actual.caracter(caracterActual) == null) {
-                actual.caracteres()[(int) caracterActual] = new NodoTrie<>();
+                actual.caracteres[(int) caracterActual] = new NodoTrie<>();
             }
             actual = actual.caracter(caracterActual);
         }
         actual.definir(valor);
         cantidadDePalabras++;
-        System.out.println("valor:" + actual.definicion());
     }
     // complejidad: O(|palabra|)
 
@@ -65,7 +64,6 @@ public class Trie<T> {
         int largoDePalabra = palabra.length();
         NodoTrie<T> actual = raiz;
         for (int i = 0; i < largoDePalabra; i++) {
-            System.out.println(actual.caracter('h'));
             char letraActual = palabra.charAt(i);
             actual = actual.caracter(letraActual);
             if (actual == null) {
@@ -109,22 +107,22 @@ public class Trie<T> {
 
     // --------RELACIONADO CON EJERCICIO CARRERAS Y EJERCICIO MATERIAS
     public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra) {
-        listaDeStringsHelper(agregarAca, raizPalabra, raiz);
+        listaDeStrings(agregarAca, raizPalabra, raiz);
     }
-
-    private void listaDeStringsHelper(ArrayList<String> agregarAca, String raizPalabra, NodoTrie<T> nodo) {
+    
+    private void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra, NodoTrie<T> nodo) {
         if (nodo == null) {
             return;
         }
-
+    
         if (nodo.definicion() != null) {
             agregarAca.add(raizPalabra);
         }
-
+    
         for (int i = 0; i < 256; i++) {
             if (nodo.caracteres[i] != null) {
                 String nuevaRaiz = raizPalabra + (char) i;
-                listaDeStringsHelper(agregarAca, nuevaRaiz, nodo.caracteres[i]);
+                listaDeStrings(agregarAca, nuevaRaiz, nodo.caracteres[i]);
             }
         }
     }// complejidad: O(sumatoria de longitud de claves en el trie), ya que la funcion
