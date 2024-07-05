@@ -1,7 +1,5 @@
 package aed;
 
-import aed.Trie.NodoTrie;
-
 public class Materia {
     
     
@@ -60,10 +58,9 @@ public class Materia {
     //-------------ELIMINAR MATERIA
     public void eliminarMateria(Trie<Integer> alumnos){
         String alumno = eliminarLibreta();
-        NodoTrie nodo;
         while (alumno != null){
-            nodo = alumnos.definirSiVacio(alumno);
-            nodo.definicion =(int)nodo.definicion - 1;
+            alumnos.definirSiVacio(alumno);
+            alumnos.getNodoADefinir().definir((int)alumnos.getNodoADefinir().definicion() - 1);
             alumno = eliminarLibreta();
         }
 

@@ -1,6 +1,5 @@
 package aed;
 import java.util.*;
-import aed.Trie.NodoTrie;
 
 public class SistemaSIU {
     enum CargoDocente {
@@ -12,8 +11,8 @@ public class SistemaSIU {
 
 
     //-------ATRIBUTOS
-    Trie<Integer> estudiantes;
-    Trie<Trie<Materia>> carreras;
+    private Trie<Integer> estudiantes;
+    private Trie<Trie<Materia>> carreras;
 
 
     //---------CONSTRUCTOR
@@ -32,22 +31,24 @@ public class SistemaSIU {
         int cantidadDeMaterias = infoMaterias.length, cantidadDeNombres;
         ParCarreraMateria[] nombresYCarreras;
         String nombreMateria, nombreCarrera;
+        
         for (int materia = 0 ; materia <cantidadDeMaterias; materia++){
             Materia objetoMateria = new Materia();//para objetoMateria, es intencional el uso de aliasing ya que queremos cambiar la direccion de materia para cualquier nombre con la que busques a esa materia.
             nombresYCarreras = infoMaterias[materia].getParesCarreraMateria();
             cantidadDeNombres = nombresYCarreras.length;
-            NodoTrie nodoADefinir;
+
+            
             for (int knombre = 0; knombre < cantidadDeNombres ; knombre ++){
                 nombreMateria = nombresYCarreras[knombre].getNombreMateria();
                 nombreCarrera = nombresYCarreras[knombre].getCarrera();
-                nodoADefinir = carreras.definirSiVacio(nombreCarrera);
+                this.carreras.definirSiVacio(nombreCarrera);
                 Trie<Materia> dondeEs;
-                if (nodoADefinir.definicion() == null) {
+                if (this.carreras.getNodoADefinir().definicion() == null) {
                     dondeEs = new Trie<Materia>();
-                    nodoADefinir.definir(dondeEs);
+                    this.carreras.getNodoADefinir().definir(dondeEs);; // define la materia en un nodo del trie de carreras
                 }
                 else{
-                    dondeEs = (Trie<Materia>)nodoADefinir.definicion();
+                    dondeEs = (Trie<Materia>)this.carreras.getNodoADefinir().definicion();
                 }
                 dondeEs.definir(nombreMateria,objetoMateria);
                 objetoMateria.agregarReferencia(dondeEs, nombreMateria);
@@ -65,8 +66,9 @@ public class SistemaSIU {
 
     //-----------METODOS
     public void inscribir(String estudiante, String carrera, String materia) {
-        NodoTrie nodoEstudiante =estudiantes.definirSiVacio(estudiante);//hago esto para no tener que buscar dos veces el mismo nodo para hacer cosas
-        nodoEstudiante.definicion = (int)nodoEstudiante.definicion + 1;
+        this.estudiantes.definirSiVacio(estudiante);
+        this.estudiantes.getNodoADefinir().definir((int)this.estudiantes.getNodoADefinir().definicion() + 1);
+
         Trie<Materia> materiasDeCarrera = carreras.definicion(carrera);
         Materia objetoMateria = materiasDeCarrera.definicion(materia);
         objetoMateria.agregarAlumno(estudiante);
@@ -168,7 +170,7 @@ public class SistemaSIU {
 /*
 Invariante de representacion: esta clase, al ser la que incorpora todas las demas, es la mas extensiva de todas, asi que iremos por partes.
 Para empezar, todo estudiante, materia y carrera del sistema existe en su Trie correspondiente. Ademas, el Trie de carreras lleva a un Trie de materias, y el de estudiantes a su cantidad de materias inscriptas.
-Todo valor que existe en libretaUniversitarias para cualquier materia, existe tambien en el Trie de estudiantes.
+-Todo valor que existe en libretaUniversitarias para cualquier materia, existe tambien en el Trie de estudiantes.
 El largo de materia.referencias, para cualquier materia, es menor o igual a la cantidad de carreras, es decir, a la cantidad de definiciones del Trie carreras.
 Para todo elemento en InfoMaterias, la carrera pertenece al Trie carreras y el nombre de la materia existe en el Trie materias asociado a esa carrera.
 La suma total de la cantidad de inscripciones de todos los estudiantes es igual a la suma total de de la longitud de libretasUniversitarias de las materias.
