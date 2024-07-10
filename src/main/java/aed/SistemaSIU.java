@@ -22,8 +22,8 @@ public class SistemaSIU {
 
         //--------TRIE ESTUDIANTE---------
         int alumnos = libretasUniversitarias.length;
-        for (int i = 0 ; i < alumnos ;i ++){
-            estudiantes.definir(libretasUniversitarias[i], 0);
+        for (int i = 0 ; i < alumnos ;i ++){ //O(|alumnos|)
+            estudiantes.definir(libretasUniversitarias[i], 0); //O(1) por tamaño acotado
         }
 
 
@@ -32,13 +32,13 @@ public class SistemaSIU {
         ParCarreraMateria[] nombresYCarreras;
         String nombreMateria, nombreCarrera;
         
-        for (int materia = 0 ; materia <cantidadDeMaterias; materia++){
+        for (int materia = 0 ; materia <cantidadDeMaterias; materia++){ //O(|materias|)
             Materia objetoMateria = new Materia();//para objetoMateria, es intencional el uso de aliasing ya que queremos cambiar la direccion de materia para cualquier nombre con la que busques a esa materia.
             nombresYCarreras = infoMaterias[materia].getParesCarreraMateria(); //O(1)
             cantidadDeNombres = nombresYCarreras.length;
 
             
-            for (int knombre = 0; knombre < cantidadDeNombres ; knombre ++){
+            for (int knombre = 0; knombre < cantidadDeNombres ; knombre ++){ //O(cantidad de nombres de materia)
                 nombreMateria = nombresYCarreras[knombre].getNombreMateria(); //O(1)
                 nombreCarrera = nombresYCarreras[knombre].getCarrera(); //O(1)
                 this.carreras.definirSiVacio(nombreCarrera);
@@ -113,7 +113,7 @@ public class SistemaSIU {
 
     public void cerrarMateria(String materia, String carrera) {
         Materia borrada = carreras.definicion(carrera).definicion(materia);
-        borrada.eliminarMateria(estudiantes);
+        borrada.eliminarMateria(estudiantes); //toda la complejidad viene de esta accion, que cumple lo pedido por la consigna como se explica abajo
     }
 
     /*
