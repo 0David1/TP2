@@ -34,13 +34,13 @@ public class SistemaSIU {
         
         for (int materia = 0 ; materia <cantidadDeMaterias; materia++){
             Materia objetoMateria = new Materia();//para objetoMateria, es intencional el uso de aliasing ya que queremos cambiar la direccion de materia para cualquier nombre con la que busques a esa materia.
-            nombresYCarreras = infoMaterias[materia].getParesCarreraMateria();
+            nombresYCarreras = infoMaterias[materia].getParesCarreraMateria(); //O(1)
             cantidadDeNombres = nombresYCarreras.length;
 
             
             for (int knombre = 0; knombre < cantidadDeNombres ; knombre ++){
-                nombreMateria = nombresYCarreras[knombre].getNombreMateria();
-                nombreCarrera = nombresYCarreras[knombre].getCarrera();
+                nombreMateria = nombresYCarreras[knombre].getNombreMateria(); //O(1)
+                nombreCarrera = nombresYCarreras[knombre].getCarrera(); //O(1)
                 this.carreras.definirSiVacio(nombreCarrera);
                 Trie<Materia> dondeEs;
                 if (this.carreras.getNodoADefinir().definicion() == null) {
@@ -50,8 +50,8 @@ public class SistemaSIU {
                 else{
                     dondeEs = (Trie<Materia>)this.carreras.getNodoADefinir().definicion();
                 }
-                dondeEs.definir(nombreMateria,objetoMateria);
-                objetoMateria.agregarReferencia(dondeEs, nombreMateria);
+                dondeEs.definir(nombreMateria,objetoMateria); //O(1) al ser el tamaño acotado
+                objetoMateria.agregarReferencia(dondeEs, nombreMateria); // lo mismo
                 
             }
         }
