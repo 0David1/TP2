@@ -41,9 +41,9 @@ public class SistemaSIU {
             for (int knombre = 0; knombre < cantidadDeNombres ; knombre ++){ //O(cantidad de nombres de materia)
                 nombreMateria = nombresYCarreras[knombre].getNombreMateria(); //O(1)
                 nombreCarrera = nombresYCarreras[knombre].getCarrera(); //O(1)
-                this.carreras.definirSiVacio(nombreCarrera);
+                this.carreras.definirSiVacio(nombreCarrera);//ARREGLAR ESTO
                 Trie<Materia> dondeEs;
-                if (this.carreras.getNodoADefinir().definicion() == null) {
+                if (this.carreras.getNodoADefinir().definicion() == null) {//TODO MAL
                     dondeEs = new Trie<Materia>();
                     this.carreras.getNodoADefinir().definir(dondeEs);; // define la materia en un nodo del trie de carreras
                 }
@@ -66,7 +66,7 @@ public class SistemaSIU {
 
     //-----------METODOS
     public void inscribir(String estudiante, String carrera, String materia) {
-        this.estudiantes.definirSiVacio(estudiante);
+        this.estudiantes.definirSiVacio(estudiante);//ARREGLAR ESTO
         this.estudiantes.getNodoADefinir().definir((int)this.estudiantes.getNodoADefinir().definicion() + 1);
 
         Trie<Materia> materiasDeCarrera = carreras.definicion(carrera);
