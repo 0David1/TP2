@@ -11,28 +11,28 @@ public class Trie<T> {
 
     // --------CONSTRUCTORES--------------
     public Trie() {// constructor del trie
-        raiz = new NodoTrie<T>();
+        raiz = new NodoTrie<T>(); //O(1)
     }
 
     public Trie(NodoTrie<T> nuevaRaiz) {
-        raiz = nuevaRaiz;
+        raiz = nuevaRaiz; //O(1)
     }
 
     public NodoTrie<T> getNodoADefinir() {
-        return this.nodoADefinir;
+        return this.nodoADefinir; //O(1)
     }
 
     public void setNodoADefinir(NodoTrie<T> n) {
-        this.nodoADefinir = n;
+        this.nodoADefinir = n; //O(1)
     }
 
     // --------METODOS--------------
     public void definir(String palabra, T valor) {
         NodoTrie<T> actual = raiz;
-        for (int i = 0; i < palabra.length(); i++) {
+        for (int i = 0; i < palabra.length(); i++) { //O(|palabra|), y si el tamaño es acotado es O(1)
             char caracterActual = palabra.charAt(i);
             if (actual.caracter(caracterActual) == null) {
-                actual.caracteres[(int) caracterActual] = new NodoTrie<>();
+                actual.caracteres[(int) caracterActual] = new NodoTrie<>(); //O(1)
             }
             actual = actual.caracter(caracterActual);
         }
@@ -44,7 +44,7 @@ public class Trie<T> {
     public NodoTrie<T> definirSiVacio(String palabra) {
         int largoDePalabra = palabra.length();
         NodoTrie<T> actual = raiz;
-        for (int i = 0; i < largoDePalabra; i++) {
+        for (int i = 0; i < largoDePalabra; i++) { //O(|palabra|)
             if (actual.caracteres[(int) palabra.charAt(i)] == null) {
                 actual.caracteres[(int) palabra.charAt(i)] = new NodoTrie<T>();
                 actual = actual.caracteres[(int) palabra.charAt(i)];
@@ -53,7 +53,7 @@ public class Trie<T> {
             }
         }
         if (actual.definicion() == null) {
-            cantidadDePalabras++;
+            cantidadDePalabras++; 
         }
         setNodoADefinir(actual);
         return actual;
@@ -63,7 +63,7 @@ public class Trie<T> {
     public T definicion(String palabra) {
         int largoDePalabra = palabra.length();
         NodoTrie<T> actual = raiz;
-        for (int i = 0; i < largoDePalabra; i++) {
+        for (int i = 0; i < largoDePalabra; i++) { //O(|palabra|)
             char letraActual = palabra.charAt(i);
             actual = actual.caracter(letraActual);
             if (actual == null) {
@@ -84,11 +84,11 @@ public class Trie<T> {
 
     private NodoTrie<T> borrar(NodoTrie<T> nodo, String palabra, int contador) {
         if (nodo == null)
-            return null;
+            return null; //O(1)
 
-        if (contador == palabra.length()) {
+        if (contador == palabra.length()) { //O(|palabra|)
             if (nodo.definicion() != null)
-                cantidadDePalabras--;
+                cantidadDePalabras--; //O(1)
             nodo.definicion = null;
         } else {
             int letraActual = palabra.charAt(contador);
@@ -98,12 +98,13 @@ public class Trie<T> {
         if (nodo.definicion != null)
             return nodo;
 
-        for (int c = 0; c < 256; c++) {
+        for (int c = 0; c < 256; c++) { //O(1) al ser acotado
             if (nodo.caracteres[c] != null)
                 return nodo;
         }
         return null;
     }
+    //O(palabra)
 
     // --------RELACIONADO CON EJERCICIO CARRERAS Y EJERCICIO MATERIAS
     public void listaDeStrings(ArrayList<String> agregarAca, String raizPalabra) {
@@ -119,7 +120,7 @@ public class Trie<T> {
             agregarAca.add(raizPalabra);
         }
     
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < 256; i++) { //O(1) al ser acotado
             if (nodo.caracteres[i] != null) {
                 String nuevaRaiz = raizPalabra + (char) i;
                 listaDeStrings(agregarAca, nuevaRaiz, nodo.caracteres[i]);
