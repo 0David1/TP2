@@ -15,7 +15,7 @@ public class Materia {
         
     //-----------CONSTRUCTOR
     public Materia(){
-        CargoDocentes = new int[4];
+        CargoDocentes = new int[4]; //O(4) = 4 * O(1)
         libretas = new listaEnlazada<String>();
         referencias = new listaEnlazada<TrieStringPar>();
     }//complejidad O(1)
@@ -74,11 +74,13 @@ public class Materia {
 
     private String eliminarLibreta(){
         return libretas.desapilar();
-    }
+    } //O(|libretas|)
+    
     private TrieStringPar eliminarReferencia(){
         return referencias.desapilar();
-    }
+    } //O(|referencias|)
 
+    //En total, tarda la cantidad de nombres de la materia y la cantidad de alumnos registrados, ademas de reducir en uno la cantidad de materias inscriptas para dichos alumnos.
 
     //-----------SUBCLASES NECESARIOS DE MATERIA-----------------------
 
