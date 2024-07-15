@@ -57,27 +57,27 @@ public class Materia {
 
     //-------------ELIMINAR MATERIA
     public void eliminarMateria(Trie<Integer> alumnos){
-        String alumno = eliminarLibreta();
-        while (alumno != null){
-            alumnos.definir(alumno, alumnos.definicion(alumno) - 1);
+        String alumno = eliminarLibreta();//O(1)
+        while (alumno != null){//O(alumnos inscriptos en la materia)
+            alumnos.definir(alumno, alumnos.definicion(alumno) - 1);//O(|1|) alumno esta acotado
             alumno = eliminarLibreta();
         }
 
-        TrieStringPar referencia = eliminarReferencia();
-        while(referencia != null){
-            Trie<Materia> trie = referencia.trie();
-            trie.borrar(referencia.nombre());
-            referencia = eliminarReferencia();
+        TrieStringPar referencia = eliminarReferencia();//O(1)
+        while(referencia != null){//O(cantidad de nombres de la materia)
+            Trie<Materia> trie = referencia.trie();//O(1)
+            trie.borrar(referencia.nombre());//(|nombreMateria|)
+            referencia = eliminarReferencia();//O(1)
         }
     }
 
     private String eliminarLibreta(){
         return libretas.desapilar();
-    } //O(|libretas|)
+    } //O(1)
     
     private TrieStringPar eliminarReferencia(){
         return referencias.desapilar();
-    } //O(|referencias|)
+    } //O(1)
 
     //En total, tarda la cantidad de nombres de la materia y la cantidad de alumnos registrados, ademas de reducir en uno la cantidad de materias inscriptas para dichos alumnos.
 
@@ -98,14 +98,14 @@ public class Materia {
         public Trie<Materia> trie(){
             return TrieDondeEsta;
         }
-    }
+    }//Todas las complejidades son O(1)
 
 
     //-----------LISTAENLAZADA IMPLEMENTA COLA
     public class listaEnlazada<T>{
         private Nodo Primero;
         private int size;
-        private class Nodo{
+        private class Nodo{//O(1)
             T libretaUniversitaria;
             Nodo siguiente;
             public Nodo(T alumno){
@@ -113,12 +113,12 @@ public class Materia {
                 siguiente = null;
             }
         }
-        public listaEnlazada(){
+        public listaEnlazada(){//O(1)
             Primero = null;
             size = 0;
         }
 
-        public T desapilar(){
+        public T desapilar(){//O(1)
             Nodo actual = Primero;
             if (actual != null){
                 Primero = actual.siguiente;
@@ -131,13 +131,13 @@ public class Materia {
 
         public int longitud (){
             return size;
-        }
+        }//O (1)
         public void apilar(T alumno){
             Nodo nuevo = new Nodo(alumno);
             nuevo.siguiente = Primero;
             Primero = nuevo;
             size ++;
-        }
+        }//O (1)
         /*
         Invariante de representacion: todo nodo menos el ultimo apunta a otro nodo, y el ultimo apunta a null. Ademas, todo nodo es apuntado por otro, excepto el primero, que no es apuntado por ninguno.
         */

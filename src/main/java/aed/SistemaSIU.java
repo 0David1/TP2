@@ -41,16 +41,16 @@ public class SistemaSIU {
                 nombreMateria = nombresYCarreras[knombre].getNombreMateria(); //O(1)
                 nombreCarrera = nombresYCarreras[knombre].getCarrera(); //O(1)
                 Trie<Materia> dondeEs;
-                dondeEs = this.carreras.definicion(nombreCarrera);
+                dondeEs = this.carreras.definicion(nombreCarrera);//O(|nombreCarrera|), longitud del String nombreCarrera
                 if (dondeEs == null) {
                     dondeEs = new Trie<Materia>();
-                    this.carreras.definir(nombreCarrera, dondeEs);// define la materia en un nodo del trie de carreras
+                    this.carreras.definir(nombreCarrera, dondeEs);// O(|nombreCarrera|)
                 }
                 else{
-                    dondeEs = (Trie<Materia>)this.carreras.definicion(nombreCarrera);
+                    dondeEs = (Trie<Materia>)this.carreras.definicion(nombreCarrera);//O(|nombreCarrera|)
                 }
-                dondeEs.definir(nombreMateria,objetoMateria); //O(1) al ser el tamaño acotado
-                objetoMateria.agregarReferencia(dondeEs, nombreMateria); // lo mismo
+                dondeEs.definir(nombreMateria,objetoMateria); //O(|nombreMateria|) 
+                objetoMateria.agregarReferencia(dondeEs, nombreMateria); //O(1), solo apila
                 
             }
         }
@@ -65,10 +65,10 @@ public class SistemaSIU {
 
     //-----------METODOS
     public void inscribir(String estudiante, String carrera, String materia) {
-        this.estudiantes.definir(estudiante,this.estudiantes.definicion(estudiante) + 1);
-        Trie<Materia> materiasDeCarrera = carreras.definicion(carrera);
-        Materia objetoMateria = materiasDeCarrera.definicion(materia);
-        objetoMateria.agregarAlumno(estudiante);
+        this.estudiantes.definir(estudiante,this.estudiantes.definicion(estudiante) + 1);// O(|1|) + O(|1|) ya que esta acotado
+        Trie<Materia> materiasDeCarrera = carreras.definicion(carrera);//O(|carrera|)
+        Materia objetoMateria = materiasDeCarrera.definicion(materia);//O(|materia|)
+        objetoMateria.agregarAlumno(estudiante);//O(1) apilar
     }
     /*
     Complejidad: se recorre el Trie carreras (|c|) y luego su Trie de materias asociado (|m|), y se agrega un estudiante al objetoMateria, que como se suma un elemento 
@@ -77,7 +77,7 @@ public class SistemaSIU {
     */
 
     public void agregarDocente(CargoDocente cargo, String carrera, String materia) {
-        Materia mate = carreras.definicion(carrera).definicion(materia);
+        Materia mate = carreras.definicion(carrera).definicion(materia);//O(|carrera|) + O(|materia|)
         switch (cargo) {
             case PROF:
                 mate.CargarDocente(0);
@@ -101,7 +101,7 @@ public class SistemaSIU {
 
 
     public int[] plantelDocente(String materia, String carrera) {
-        return carreras.definicion(carrera).definicion(materia).Docentes();
+        return carreras.definicion(carrera).definicion(materia).Docentes();//O(|materia|) +O(|carrera|)
     }
 
     /*
@@ -109,7 +109,7 @@ public class SistemaSIU {
     */
 
     public void cerrarMateria(String materia, String carrera) {
-        Materia borrada = carreras.definicion(carrera).definicion(materia);
+        Materia borrada = carreras.definicion(carrera).definicion(materia);//O(|carrera|) +O(|materia|)
         borrada.eliminarMateria(estudiantes); //toda la complejidad viene de esta accion, que cumple lo pedido por la consigna como se explica abajo
     }
 
@@ -120,7 +120,7 @@ public class SistemaSIU {
     */
 
     public int inscriptos(String materia, String carrera) {
-        return carreras.definicion(carrera).definicion(materia).numeroDeLibretas();
+        return carreras.definicion(carrera).definicion(materia).numeroDeLibretas();//O(|materia|) +O(|carrera|) 
     }
     
     /*
@@ -128,7 +128,7 @@ public class SistemaSIU {
     */
 
     public boolean excedeCupo(String materia, String carrera) {
-        return carreras.definicion(carrera).definicion(materia).excedeCupo();
+        return carreras.definicion(carrera).definicion(materia).excedeCupo();//O(|materia|) +O(|carrera|)
     }
     
     /*
@@ -147,7 +147,7 @@ public class SistemaSIU {
 
     public String[] materias(String carrera) {
         ArrayList<String> resultado = new ArrayList<>(carreras.definicion(carrera).tamaño());
-        carreras.definicion(carrera).listaDeStrings(resultado, "");
+        carreras.definicion(carrera).listaDeStrings(resultado, "");//O(|carrera|)
         return resultado.toArray(new String[0]);
     }
 
@@ -156,7 +156,7 @@ public class SistemaSIU {
     */
 
     public int materiasInscriptas(String estudiante) {
-        return estudiantes.definicion(estudiante);
+        return estudiantes.definicion(estudiante);//O(|1|) porque esta acotado
     }
 
     /*
