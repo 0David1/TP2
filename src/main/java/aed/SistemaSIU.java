@@ -65,13 +65,7 @@ public class SistemaSIU {
 
     //-----------METODOS
     public void inscribir(String estudiante, String carrera, String materia) {
-        int valor= this.estudiantes.definicion(estudiante);
-        if (this.estudiantes.definicion(estudiante) == null){
-            this.estudiantes.definir(estudiante,1);
-        }
-        else{
-            this.estudiantes.definir(estudiante,valor ++);
-        }
+        this.estudiantes.definir(estudiante,this.estudiantes.definicion(estudiante) + 1);
         Trie<Materia> materiasDeCarrera = carreras.definicion(carrera);
         Materia objetoMateria = materiasDeCarrera.definicion(materia);
         objetoMateria.agregarAlumno(estudiante);
