@@ -31,7 +31,6 @@ public class SistemaSIU {
         int cantidadDeMaterias = infoMaterias.length, cantidadDeNombres;
         ParCarreraMateria[] nombresYCarreras;
         String nombreMateria, nombreCarrera;
-        
         for (int materia = 0 ; materia <cantidadDeMaterias; materia++){ //O(|materias|)
             Materia objetoMateria = new Materia();//para objetoMateria, es intencional el uso de aliasing ya que queremos cambiar la direccion de materia para cualquier nombre con la que busques a esa materia.
             nombresYCarreras = infoMaterias[materia].getParesCarreraMateria(); //O(1)
@@ -41,14 +40,14 @@ public class SistemaSIU {
             for (int knombre = 0; knombre < cantidadDeNombres ; knombre ++){ //O(cantidad de nombres de materia)
                 nombreMateria = nombresYCarreras[knombre].getNombreMateria(); //O(1)
                 nombreCarrera = nombresYCarreras[knombre].getCarrera(); //O(1)
-                this.carreras.definirSiVacio(nombreCarrera);//ARREGLAR ESTO
                 Trie<Materia> dondeEs;
-                if (this.carreras.getNodoADefinir().definicion() == null) {//TODO MAL
+                dondeEs = this.carreras.definicion(nombreCarrera);
+                if (dondeEs == null) {
                     dondeEs = new Trie<Materia>();
-                    this.carreras.getNodoADefinir().definir(dondeEs);; // define la materia en un nodo del trie de carreras
+                    this.carreras.definir(nombreCarrera, dondeEs);// define la materia en un nodo del trie de carreras
                 }
                 else{
-                    dondeEs = (Trie<Materia>)this.carreras.getNodoADefinir().definicion();
+                    dondeEs = (Trie<Materia>)this.carreras.definicion(nombreCarrera);
                 }
                 dondeEs.definir(nombreMateria,objetoMateria); //O(1) al ser el tamaño acotado
                 objetoMateria.agregarReferencia(dondeEs, nombreMateria); // lo mismo
@@ -66,9 +65,13 @@ public class SistemaSIU {
 
     //-----------METODOS
     public void inscribir(String estudiante, String carrera, String materia) {
-        this.estudiantes.definirSiVacio(estudiante);//ARREGLAR ESTO
-        this.estudiantes.getNodoADefinir().definir((int)this.estudiantes.getNodoADefinir().definicion() + 1);
-
+        int valor= this.estudiantes.definicion(estudiante);
+        if (this.estudiantes.definicion(estudiante) == null){
+            this.estudiantes.definir(estudiante,1);
+        }
+        else{
+            this.estudiantes.definir(estudiante,valor ++);
+        }
         Trie<Materia> materiasDeCarrera = carreras.definicion(carrera);
         Materia objetoMateria = materiasDeCarrera.definicion(materia);
         objetoMateria.agregarAlumno(estudiante);
