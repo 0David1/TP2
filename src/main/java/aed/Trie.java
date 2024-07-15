@@ -18,14 +18,6 @@ public class Trie<T> {
         raiz = nuevaRaiz; //O(1)
     }
 
-    public NodoTrie<T> getNodoADefinir() {
-        return this.nodoADefinir; //O(1)
-    }
-
-    public void setNodoADefinir(NodoTrie<T> n) {
-        this.nodoADefinir = n; //O(1)
-    }
-
     // --------METODOS--------------
     public void definir(String palabra, T valor) {
         NodoTrie<T> actual = raiz;
@@ -38,25 +30,6 @@ public class Trie<T> {
         }
         actual.definir(valor);
         cantidadDePalabras++;
-    }
-    // complejidad: O(|palabra|)
-
-    public NodoTrie<T> definirSiVacio(String palabra) {
-        int largoDePalabra = palabra.length();
-        NodoTrie<T> actual = raiz;
-        for (int i = 0; i < largoDePalabra; i++) { //O(|palabra|)
-            if (actual.caracteres[(int) palabra.charAt(i)] == null) {
-                actual.caracteres[(int) palabra.charAt(i)] = new NodoTrie<T>();
-                actual = actual.caracteres[(int) palabra.charAt(i)];
-            } else {
-                actual = actual.caracteres[(int) palabra.charAt(i)];
-            }
-        }
-        if (actual.definicion() == null) {
-            cantidadDePalabras++; 
-        }
-        setNodoADefinir(actual);
-        return actual;
     }
     // complejidad: O(|palabra|)
 

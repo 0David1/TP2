@@ -59,8 +59,7 @@ public class Materia {
     public void eliminarMateria(Trie<Integer> alumnos){
         String alumno = eliminarLibreta();
         while (alumno != null){
-            alumnos.definirSiVacio(alumno);
-            alumnos.getNodoADefinir().definir((int)alumnos.getNodoADefinir().definicion() - 1);
+            alumnos.definir(alumno, alumnos.definicion(alumno) - 1);
             alumno = eliminarLibreta();
         }
 
